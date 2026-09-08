@@ -558,6 +558,282 @@ tailwind.config = {
   </script>
 </section>
 
+    <section data-tela="pre-anamnese" class="hidden">
+  <style>
+    .pa-card{background:#fff;border:1px solid #ece9d4;border-radius:1rem}
+    .pa-chip{border:1px solid #ded9b8;border-radius:999px;padding:.45rem .8rem;font-size:.78rem;color:#4F5504;background:#fdfdf7;transition:.15s}
+    .pa-chip.on{background:#4F5504;border-color:#4F5504;color:#F7F5E6}
+    .pa-lbl{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#8D8602;font-weight:600}
+    .pa-in{width:100%;border:1px solid #ded9b8;border-radius:.75rem;padding:.7rem .85rem;font-size:.9rem;background:#fdfdf7;color:#3d4103;outline:none}
+    .pa-in:focus{border-color:#C4BC00;background:#fff}
+    .pa-step{display:none}
+    .pa-step.ativo{display:block}
+  </style>
+
+  <div class="px-5 pt-5 pb-28">
+    <p class="pa-lbl">Ávera Unicuidado</p>
+    <h2 class="text-2xl font-semibold text-[#4F5504] leading-tight mt-1" style="font-family:Georgia,serif">Pré-anamnese</h2>
+    <p class="text-[13px] text-[#77713f] mt-1">Consulta com <span class="font-medium text-[#6F760A]">Dra. Marina Ferrari</span> — 14/06, 09:30</p>
+
+    <div class="mt-5">
+      <div class="flex items-center justify-between text-[11px] text-[#8D8602] font-semibold mb-2">
+        <span id="pa-etapa-nome">Etapa 1 de 6 · Motivo</span>
+        <span id="pa-pct">17%</span>
+      </div>
+      <div class="h-2 rounded-full bg-[#efecd6] overflow-hidden">
+        <div id="pa-bar" class="h-full rounded-full transition-all duration-300" style="width:17%;background:linear-gradient(90deg,#4F5504,#C4BC00)"></div>
+      </div>
+      <div class="flex gap-1.5 mt-3" id="pa-dots"></div>
+    </div>
+
+    <div class="pa-card p-4 mt-5">
+
+      <div class="pa-step ativo" data-passo="1">
+        <p class="pa-lbl">Motivo da consulta</p>
+        <p class="text-sm text-[#3d4103] mt-1 mb-3">O que te trouxe até a Ávera?</p>
+        <div class="flex flex-wrap gap-2" id="pa-motivos">
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Cansaço constante</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Ganho de peso</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Queda de cabelo</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">TPM intensa</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Ansiedade</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Intestino preso</button>
+        </div>
+        <p class="pa-lbl mt-4 block">Conte com suas palavras</p>
+        <textarea id="pa-relato" rows="3" class="pa-in mt-2" placeholder="Ex.: acordo cansada mesmo dormindo 8h e sinto muito inchaço à tarde."></textarea>
+      </div>
+
+      <div class="pa-step" data-passo="2">
+        <p class="pa-lbl">Sintomas e sono</p>
+        <p class="text-sm text-[#3d4103] mt-1 mb-3">Como você tem se sentido nos últimos 30 dias?</p>
+        <div class="space-y-4">
+          <div>
+            <div class="flex justify-between text-[13px] mb-1"><span class="text-[#4F5504] font-medium">Nível de energia</span><span id="pa-v-energia" class="text-[#A67B01] font-semibold">4/10</span></div>
+            <input type="range" min="1" max="10" value="4" class="w-full accent-[#6F760A]" oninput="pre_anamnese_range('pa-v-energia',this.value)">
+          </div>
+          <div>
+            <div class="flex justify-between text-[13px] mb-1"><span class="text-[#4F5504] font-medium">Qualidade do sono</span><span id="pa-v-sono" class="text-[#A67B01] font-semibold">5/10</span></div>
+            <input type="range" min="1" max="10" value="5" class="w-full accent-[#6F760A]" oninput="pre_anamnese_range('pa-v-sono',this.value)">
+          </div>
+          <div>
+            <div class="flex justify-between text-[13px] mb-1"><span class="text-[#4F5504] font-medium">Estresse no dia a dia</span><span id="pa-v-estresse" class="text-[#A67B01] font-semibold">7/10</span></div>
+            <input type="range" min="1" max="10" value="7" class="w-full accent-[#6F760A]" oninput="pre_anamnese_range('pa-v-estresse',this.value)">
+          </div>
+        </div>
+        <p class="pa-lbl mt-4 block">Horas de sono por noite</p>
+        <div class="flex flex-wrap gap-2 mt-2" id="pa-horas">
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-horas')">menos de 5h</button>
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_unico(this,'pa-horas')">5h a 6h</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-horas')">7h a 8h</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-horas')">mais de 8h</button>
+        </div>
+      </div>
+
+      <div class="pa-step" data-passo="3">
+        <p class="pa-lbl">Alimentação e intestino</p>
+        <p class="text-sm text-[#3d4103] mt-1 mb-3">Marque o que combina com sua rotina.</p>
+        <div class="flex flex-wrap gap-2" id="pa-alim">
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-alim')">Café da manhã salgado</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Pulo refeições</button>
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-alim')">Muito doce à noite</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Como fora todo dia</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Sem lactose</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Vegetariana</button>
+        </div>
+        <p class="pa-lbl mt-4 block">Água por dia</p>
+        <select class="pa-in mt-2" id="pa-agua" onchange="pre_anamnese_resumo()">
+          <option>Menos de 1 litro</option>
+          <option selected>1 a 1,5 litro</option>
+          <option>2 litros</option>
+          <option>Mais de 2,5 litros</option>
+        </select>
+        <p class="pa-lbl mt-4 block">Funcionamento intestinal</p>
+        <div class="flex flex-wrap gap-2 mt-2" id="pa-intest">
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_unico(this,'pa-intest')">Todos os dias</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-intest')">Dia alternado</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-intest')">2x por semana</button>
+        </div>
+      </div>
+
+      <div class="pa-step" data-passo="4">
+        <p class="pa-lbl">Rotina e movimento</p>
+        <p class="text-sm text-[#3d4103] mt-1 mb-3">Como são seus dias?</p>
+        <label class="pa-lbl block">Ocupação</label>
+        <input id="pa-ocup" class="pa-in mt-2" value="Advogada — escritório em Moema" oninput="pre_anamnese_resumo()">
+        <p class="pa-lbl mt-4 block">Atividade física</p>
+        <div class="flex flex-wrap gap-2 mt-2" id="pa-ativ">
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-ativ')">Não pratico</button>
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_unico(this,'pa-ativ')">2x na semana</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-ativ')">4x na semana</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-ativ')">Todos os dias</button>
+        </div>
+        <p class="pa-lbl mt-4 block">Emoções predominantes</p>
+        <div class="flex flex-wrap gap-2 mt-2" id="pa-emo">
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-emo')">🙃 Sobrecarga</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-emo')">😴 Desânimo</button>
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-emo')">😬 Irritação</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-emo')">🙂 Bem no geral</button>
+        </div>
+      </div>
+
+      <div class="pa-step" data-passo="5">
+        <p class="pa-lbl">Medicamentos e suplementos</p>
+        <p class="text-sm text-[#3d4103] mt-1 mb-3">Adicione o que você usa hoje.</p>
+        <div class="flex gap-2">
+          <input id="pa-med-nome" class="pa-in" placeholder="Ex.: Vitamina D 2.000UI">
+          <button type="button" onclick="pre_anamnese_addMed()" class="px-4 rounded-xl text-sm font-semibold text-[#F7F5E6]" style="background:#6F760A">+</button>
+        </div>
+        <ul id="pa-med-lista" class="mt-3 space-y-2"></ul>
+        <p class="text-[11px] text-[#8D8602] mt-3">Toque em um item para remover.</p>
+        <label class="flex items-start gap-2 mt-4 text-[13px] text-[#3d4103]">
+          <input type="checkbox" id="pa-exames" class="mt-0.5 accent-[#6F760A]" onchange="pre_anamnese_resumo()">
+          <span>Tenho exames recentes para anexar na consulta (últimos 6 meses)</span>
+        </label>
+      </div>
+
+      <div class="pa-step" data-passo="6">
+        <p class="pa-lbl">Seus objetivos</p>
+        <p class="text-sm text-[#3d4103] mt-1 mb-3">Escolha até três prioridades.</p>
+        <div class="flex flex-wrap gap-2" id="pa-obj">
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-obj')">Mais energia</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Dormir melhor</button>
+          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-obj')">Reduzir inchaço</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Emagrecer com saúde</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Equilíbrio hormonal</button>
+          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Pele e cabelo</button>
+        </div>
+        <div class="mt-4 rounded-xl p-3" style="background:#f7f6e8;border:1px solid #e6e2c2">
+          <p class="pa-lbl">Prévia do resumo por IA</p>
+          <p id="pa-resumo" class="text-[13px] text-[#4F5504] leading-relaxed mt-2"></p>
+        </div>
+        <label class="flex items-start gap-2 mt-4 text-[12px] text-[#3d4103]">
+          <input type="checkbox" id="pa-consent" class="mt-0.5 accent-[#6F760A]" checked>
+          <span>Autorizo o uso das respostas para preparo da consulta e geração de resumo pela IA da Ávera.</span>
+        </label>
+      </div>
+
+      <div class="pa-step" data-passo="7">
+        <div class="text-center py-4">
+          <div class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl" style="background:#eff0d6">✓</div>
+          <h3 class="text-xl font-semibold text-[#4F5504] mt-3" style="font-family:Georgia,serif">Pré-anamnese enviada</h3>
+          <p class="text-[13px] text-[#77713f] mt-1">Enviado em 12/06 às 20:14 · protocolo #PA-2418</p>
+        </div>
+        <div class="rounded-xl p-3" style="background:#f7f6e8;border:1px solid #e6e2c2">
+          <p class="pa-lbl">Resumo pré-consulta gerado</p>
+          <p id="pa-resumo-final" class="text-[13px] text-[#4F5504] leading-relaxed mt-2"></p>
+          <p class="text-[11px] text-[#8D8602] mt-2">Aguardando revisão da Dra. Marina Ferrari.</p>
+        </div>
+        <div class="mt-4 space-y-2">
+          <button type="button" onclick="mostrarTela('jornada-da-cliente')" class="w-full py-3 rounded-xl text-sm font-semibold text-[#F7F5E6]" style="background:#4F5504">Ir para minha jornada</button>
+          <button type="button" onclick="mostrarTela('check-in-diario')" class="w-full py-3 rounded-xl text-sm font-semibold text-[#4F5504]" style="border:1px solid #C4BC00">Fazer check-in de hoje</button>
+          <button type="button" onclick="mostrarTela('chat-e-suporte')" class="w-full py-3 rounded-xl text-sm font-semibold text-[#6F760A]">Falar com a equipe Ávera</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pa-nav" class="flex gap-2 mt-4">
+      <button type="button" id="pa-voltar" onclick="pre_anamnese_voltar()" class="px-4 py-3 rounded-xl text-sm font-semibold text-[#6F760A]" style="border:1px solid #ded9b8">Voltar</button>
+      <button type="button" id="pa-avancar" onclick="pre_anamnese_avancar()" class="flex-1 py-3 rounded-xl text-sm font-semibold text-[#F7F5E6]" style="background:linear-gradient(90deg,#4F5504,#8D8602)">Continuar</button>
+    </div>
+    <button type="button" onclick="mostrarTela('jornada-da-cliente')" class="w-full mt-3 text-[12px] text-[#8D8602] font-medium">Responder depois</button>
+  </div>
+
+  <script>
+    var pre_anamnese_passo = 1;
+    var pre_anamnese_nomes = ['Motivo','Sintomas','Alimentação','Rotina','Medicamentos','Objetivos'];
+    var pre_anamnese_meds = ['Anticoncepcional Elani 28','Vitamina D 2.000UI'];
+
+    function pre_anamnese_dots(){
+      var h='';
+      for(var i=1;i<=6;i++){
+        var c = i<=pre_anamnese_passo ? '#6F760A' : '#e6e2c2';
+        h+='<button type="button" onclick="pre_anamnese_ir('+i+')" class="flex-1 h-1.5 rounded-full" style="background:'+c+'"></button>';
+      }
+      document.getElementById('pa-dots').innerHTML=h;
+    }
+    function pre_anamnese_render(){
+      document.querySelectorAll('[data-tela="pre-anamnese"] .pa-step').forEach(function(s){
+        s.classList.toggle('ativo', s.dataset.passo == pre_anamnese_passo);
+      });
+      var fim = pre_anamnese_passo === 7;
+      document.getElementById('pa-nav').style.display = fim ? 'none' : 'flex';
+      if(!fim){
+        var pct = Math.round(pre_anamnese_passo/6*100);
+        document.getElementById('pa-bar').style.width = pct+'%';
+        document.getElementById('pa-pct').textContent = pct+'%';
+        document.getElementById('pa-etapa-nome').textContent = 'Etapa '+pre_anamnese_passo+' de 6 · '+pre_anamnese_nomes[pre_anamnese_passo-1];
+        document.getElementById('pa-voltar').style.display = pre_anamnese_passo===1 ? 'none' : 'block';
+        document.getElementById('pa-avancar').textContent = pre_anamnese_passo===6 ? 'Enviar pré-anamnese' : 'Continuar';
+      } else {
+        document.getElementById('pa-bar').style.width='100%';
+        document.getElementById('pa-pct').textContent='100%';
+        document.getElementById('pa-etapa-nome').textContent='Concluído';
+      }
+      pre_anamnese_dots();
+      pre_anamnese_resumo();
+    }
+    function pre_anamnese_avancar(){
+      if(pre_anamnese_passo===6 && !document.getElementById('pa-consent').checked){
+        document.getElementById('pa-resumo').textContent='Para enviar, é necessário autorizar o uso das respostas.';
+        return;
+      }
+      if(pre_anamnese_passo<7){pre_anamnese_passo++;pre_anamnese_render();window.scrollTo(0,0);}
+    }
+    function pre_anamnese_voltar(){ if(pre_anamnese_passo>1){pre_anamnese_passo--;pre_anamnese_render();} }
+    function pre_anamnese_ir(n){ if(n<=6){pre_anamnese_passo=n;pre_anamnese_render();} }
+    function pre_anamnese_chip(b,g){
+      if(g==='pa-obj' && !b.classList.contains('on')){
+        var on=document.querySelectorAll('#pa-obj .pa-chip.on');
+        if(on.length>=3){on[0].classList.remove('on');}
+      }
+      b.classList.toggle('on'); pre_anamnese_resumo();
+    }
+    function pre_anamnese_unico(b,g){
+      document.querySelectorAll('#'+g+' .pa-chip').forEach(function(c){c.classList.remove('on');});
+      b.classList.add('on'); pre_anamnese_resumo();
+    }
+    function pre_anamnese_range(id,v){ document.getElementById(id).textContent=v+'/10'; pre_anamnese_resumo(); }
+    function pre_anamnese_addMed(){
+      var i=document.getElementById('pa-med-nome');
+      if(i.value.trim()===''){return;}
+      pre_anamnese_meds.push(i.value.trim()); i.value=''; pre_anamnese_meds_render();
+    }
+    function pre_anamnese_remMed(n){ pre_anamnese_meds.splice(n,1); pre_anamnese_meds_render(); }
+    function pre_anamnese_meds_render(){
+      var l=document.getElementById('pa-med-lista');
+      if(!pre_anamnese_meds.length){ l.innerHTML='<li class="text-[13px] text-[#8D8602]">Nenhum item informado.</li>'; }
+      else{
+        l.innerHTML = pre_anamnese_meds.map(function(m,i){
+          return '<li><button type="button" onclick="pre_anamnese_remMed('+i+')" class="w-full text-left text-[13px] text-[#3d4103] rounded-xl px-3 py-2 flex justify-between items-center" style="background:#f7f6e8;border:1px solid #e6e2c2"><span>💊 '+m+'</span><span class="text-[#A67B01]">✕</span></button></li>';
+        }).join('');
+      }
+      pre_anamnese_resumo();
+    }
+    function pre_anamnese_sel(g){
+      return Array.prototype.map.call(document.querySelectorAll('#'+g+' .pa-chip.on'),function(c){return c.textContent.trim();});
+    }
+    function pre_anamnese_resumo(){
+      var motivos=pre_anamnese_sel('pa-motivos'), objs=pre_anamnese_sel('pa-obj');
+      var horas=pre_anamnese_sel('pa-horas')[0]||'não informado';
+      var ativ=pre_anamnese_sel('pa-ativ')[0]||'não informado';
+      var intest=pre_anamnese_sel('pa-intest')[0]||'não informado';
+      var relato=document.getElementById('pa-relato').value.trim();
+      var t='Cliente Juliana Alencar, 34 anos. Queixa principal: '+(motivos.length?motivos.join(', ').toLowerCase():'a definir na consulta')+'. '
+        +(relato?'Relato: "'+relato+'". ':'')
+        +'Sono de '+horas+' com qualidade '+document.getElementById('pa-v-sono').textContent+' e energia '+document.getElementById('pa-v-energia').textContent+'; estresse '+document.getElementById('pa-v-estresse').textContent+'. '
+        +'Hidratação: '+document.getElementById('pa-agua').value.toLowerCase()+'; intestino '+intest.toLowerCase()+'. '
+        +'Atividade física '+ativ.toLowerCase()+' · ocupação: '+(document.getElementById('pa-ocup').value||'não informada')+'. '
+        +'Em uso: '+(pre_anamnese_meds.length?pre_anamnese_meds.join(' / '):'nenhum item')+'. '
+        +(document.getElementById('pa-exames').checked?'Traz exames dos últimos 6 meses. ':'')
+        +'Objetivos: '+(objs.length?objs.join(', ').toLowerCase():'a alinhar')+'.';
+      document.getElementById('pa-resumo').textContent=t;
+      document.getElementById('pa-resumo-final').textContent=t;
+    }
+    pre_anamnese_meds_render();
+    pre_anamnese_render();
+  </script>
+</section>
+
     <!-- TELAS -->
   </main>
 
