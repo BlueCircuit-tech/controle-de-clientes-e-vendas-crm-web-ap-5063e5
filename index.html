@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ávera Unicuidado — Jornada Completa</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        avera: {
+          900: '#2A2D02',
+          800: '#3C4103',
+          700: '#4F5504',
+          600: '#6F760A',
+          500: '#8D8602',
+          400: '#C4BC00',
+          300: '#DDD86B',
+          200: '#EDEBB8',
+          100: '#F6F5E4',
+          50:  '#FBFBF2',
+          ambar: '#A67B01',
+          ambarClaro: '#D8B45A'
+        }
+      },
+      fontFamily: {
+        display: ['Fraunces', 'Georgia', 'serif'],
+        sans: ['Manrope', 'system-ui', 'sans-serif']
+      },
+      boxShadow: {
+        suave: '0 4px 20px -6px rgba(79,85,4,0.18)',
+        cartao: '0 2px 12px -4px rgba(79,85,4,0.14)'
+      }
+    }
+  }
+}
+</script>
+<style>
+  html, body { max-width: 100%; overflow-x: hidden; }
+  body {
+    background: #EAE9D9;
+    font-family: 'Manrope', sans-serif;
+  }
+  #aparelho {
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: #FBFBF2;
+    box-shadow: 0 0 60px -10px rgba(42,45,2,0.35);
+    position: relative;
+  }
+  main { padding-bottom: 92px; }
+  .nav-btn {
+    color: #8A8B78;
+    transition: color .18s ease, background .18s ease, transform .18s ease;
+  }
+  .nav-btn svg { transition: transform .18s ease; }
+  .nav-btn.ativo {
+    color: #4F5504;
+    background: #EDEBB8;
+    transform: translateY(-2px);
+  }
+  .nav-btn.ativo svg { transform: scale(1.08); }
+  .nav-btn.ativo span { font-weight: 700; }
+  .nav-btn.ativo::after {
+    content: '';
+    position: absolute;
+    top: -1px; left: 50%;
+    transform: translateX(-50%);
+    width: 22px; height: 3px;
+    border-radius: 999px;
+    background: #C4BC00;
+  }
+  ::-webkit-scrollbar { width: 0; height: 0; }
+  .scroll-x { overflow-x: auto; scrollbar-width: none; }
+</style>
+</head>
+<body class="font-sans text-avera-900 antialiased">
+
+<div id="aparelho">
+
+  <main>
+    <!-- TELAS -->
+  </main>
+
+  <nav class="fixed bottom-0 left-0 right-0 z-40">
+    <div class="mx-auto max-w-[430px] bg-white/95 backdrop-blur border-t border-avera-200 px-1.5 pt-1.5 pb-2">
+      <div class="scroll-x flex items-stretch gap-1">
+
+        <button data-nav="jornada-da-cliente" onclick="mostrarTela('jornada-da-cliente')"
+          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7-4.4-7-9.5a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.1-7 9.5-7 9.5z"/></svg>
+          <span class="text-[9.5px] leading-none tracking-tight">Jornada</span>
+        </button>
+
+        <button data-nav="check-in-diario" onclick="mostrarTela('check-in-diario')"
+          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5l2.2 2.2L15.5 9"/><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M8 2.5v3M16 2.5v3"/></svg>
+          <span class="text-[9.5px] leading-none tracking-tight">Check-in</span>
+        </button>
+
+        <button data-nav="pre-anamnese" onclick="mostrarTela('pre-anamnese')"
+          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.5v4.5h4.5"/><path d="M18.5 8.5V19a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2H14z"/><path d="M9 13h6M9 16.5h4"/></svg>
+          <span class="text-[9.5px] leading-none tracking-tight">Anamnese</span>
+        </button>
+
+        <button data-nav="painel-profissional" onclick="mostrarTela('painel-profissional')"
+          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
+          <span class="text-[9.5px] leading-none tracking-tight">Painel</span>
+        </button>
+
+        <button data-nav="ficha-da-cliente" onclick="mostrarTela('ficha-da-cliente')"
+          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>
+          <span class="text-[9.5px] leading-none tracking-tight">Ficha</span>
+        </button>
+
+        <button data-nav="chat-e-suporte" onclick="mostrarTela('chat-e-suporte')"
+          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12.5c0 4-3.8 7-8.5 7-1 0-2-.14-2.9-.4L4 21l1.4-3.6A6.6 6.6 0 0 1 3.5 12.5c0-4 3.8-7 8.5-7s8.5 3 8.5 7z"/></svg>
+          <span class="text-[9.5px] leading-none tracking-tight">Suporte</span>
+        </button>
+
+      </div>
+    </div>
+  </nav>
+
+</div>
+
+<script>
+  function mostrarTela(id) {
+    document.querySelectorAll('[data-tela]').forEach(function (s) {
+      s.classList.toggle('hidden', s.dataset.tela !== id);
+    });
+    document.querySelectorAll('[data-nav]').forEach(function (b) {
+      b.classList.toggle('ativo', b.dataset.nav === id);
+    });
+    window.scrollTo({ top: 0 });
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    mostrarTela('jornada-da-cliente');
+  });
+</script>
+
+</body>
+</html>
