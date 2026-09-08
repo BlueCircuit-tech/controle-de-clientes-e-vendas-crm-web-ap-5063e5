@@ -85,6 +85,209 @@ tailwind.config = {
 <div id="aparelho">
 
   <main>
+    <section data-tela="jornada-da-cliente" class="hidden">
+  <style>
+    .av-card{background:#fff;border-radius:1.25rem;box-shadow:0 2px 14px rgba(79,85,4,.08);border:1px solid #EFEEDC}
+    .av-chip{border-radius:999px;font-size:.7rem;font-weight:600;padding:.2rem .6rem;letter-spacing:.02em}
+    .av-item{display:flex;align-items:center;gap:.75rem;padding:.7rem .8rem;border-radius:1rem;border:1px solid #EFEEDC;background:#FDFDF6;width:100%;text-align:left;transition:.18s}
+    .av-item.feito{background:#F4F5E2;border-color:#C4BC00}
+    .av-box{width:1.55rem;height:1.55rem;border-radius:.6rem;border:2px solid #C4BC00;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;flex:none}
+    .av-item.feito .av-box{background:#6F760A;border-color:#6F760A}
+    .av-atalho{display:flex;flex-direction:column;gap:.35rem;padding:.85rem;border-radius:1.1rem;background:#fff;border:1px solid #EFEEDC;text-align:left}
+  </style>
+
+  <div class="px-4 pt-4 pb-28 space-y-4" style="background:#FBFBF2;font-family:'Outfit','Georgia',serif">
+
+    <div class="flex items-center gap-3">
+      <img src="https://i.pravatar.cc/120?img=32" alt="Foto de Renata Villaça" class="w-14 h-14 rounded-2xl object-cover ring-2" style="--tw-ring-color:#C4BC00">
+      <div class="min-w-0">
+        <p class="text-[.7rem] uppercase tracking-widest" style="color:#A67B01">Terça, 18 de março</p>
+        <h2 class="text-xl leading-tight font-semibold" style="color:#4F5504">Bom dia, Renata</h2>
+        <p class="text-xs text-neutral-500">Dia 23 da sua jornada Unicuidado</p>
+      </div>
+    </div>
+
+    <div class="rounded-3xl p-4 text-white" style="background:linear-gradient(135deg,#4F5504 0%,#6F760A 55%,#8D8602 100%)">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-[.68rem] uppercase tracking-widest opacity-80">Progresso da semana</p>
+          <p class="text-2xl font-semibold" id="jc-pct">72%</p>
+        </div>
+        <button onclick="mostrarTela('check-in-diario')" class="av-chip" style="background:#C4BC00;color:#4F5504">Check-in de hoje →</button>
+      </div>
+      <div class="mt-3 h-2 rounded-full bg-white/25 overflow-hidden">
+        <div id="jc-barra" class="h-full rounded-full transition-all duration-500" style="width:72%;background:#C4BC00"></div>
+      </div>
+      <div class="mt-3 flex justify-between text-[.65rem]">
+        <span class="opacity-70">S 91%</span><span class="opacity-70">T 84%</span><span class="opacity-70">Q 60%</span>
+        <span class="opacity-70">Q 77%</span><span class="opacity-70">S 68%</span><span class="opacity-70">S 55%</span>
+        <span class="font-bold" style="color:#F2EFA6">Hoje</span>
+      </div>
+    </div>
+
+    <div class="av-card p-4">
+      <div class="flex items-start justify-between mb-3">
+        <div>
+          <h3 class="font-semibold" style="color:#4F5504">Protocolo de hoje</h3>
+          <p class="text-xs text-neutral-500">Dra. Marcela Andrade · Nutrologia</p>
+        </div>
+        <span class="av-chip" id="jc-contador" style="background:#F4F5E2;color:#6F760A">2 de 5</span>
+      </div>
+
+      <div class="space-y-2" id="jc-lista">
+        <button class="av-item feito" onclick="jornada_da_cliente_toggle(this)">
+          <span class="av-box">✓</span>
+          <span class="flex-1">
+            <span class="block text-sm font-medium" style="color:#4F5504">Magnésio dimalato 300mg</span>
+            <span class="block text-[.7rem] text-neutral-500">Em jejum · 07h00</span>
+          </span>
+          <span class="text-lg">💊</span>
+        </button>
+        <button class="av-item feito" onclick="jornada_da_cliente_toggle(this)">
+          <span class="av-box">✓</span>
+          <span class="flex-1">
+            <span class="block text-sm font-medium" style="color:#4F5504">Caminhada leve 25 min</span>
+            <span class="block text-[.7rem] text-neutral-500">Manhã · antes das 10h</span>
+          </span>
+          <span class="text-lg">🚶‍♀️</span>
+        </button>
+        <button class="av-item" onclick="jornada_da_cliente_toggle(this)">
+          <span class="av-box">✓</span>
+          <span class="flex-1">
+            <span class="block text-sm font-medium" style="color:#4F5504">Ômega 3 · 2 cápsulas</span>
+            <span class="block text-[.7rem] text-neutral-500">Após o almoço · 13h00</span>
+          </span>
+          <span class="text-lg">🐟</span>
+        </button>
+        <button class="av-item" onclick="jornada_da_cliente_toggle(this)">
+          <span class="av-box">✓</span>
+          <span class="flex-1">
+            <span class="block text-sm font-medium" style="color:#4F5504">Jantar sem ultraprocessados</span>
+            <span class="block text-[.7rem] text-neutral-500">Até as 20h30</span>
+          </span>
+          <span class="text-lg">🥗</span>
+        </button>
+        <button class="av-item" onclick="jornada_da_cliente_toggle(this)">
+          <span class="av-box">✓</span>
+          <span class="flex-1">
+            <span class="block text-sm font-medium" style="color:#4F5504">Dormir até 23h · sem telas</span>
+            <span class="block text-[.7rem] text-neutral-500">Rotina do sono</span>
+          </span>
+          <span class="text-lg">🌙</span>
+        </button>
+      </div>
+      <p id="jc-aviso" class="hidden mt-3 text-xs font-medium rounded-xl px-3 py-2" style="background:#F4F5E2;color:#4F5504"></p>
+    </div>
+
+    <div class="av-card p-4">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="font-semibold" style="color:#4F5504">Água do dia</h3>
+        <span class="text-sm font-semibold" style="color:#A67B01"><span id="jc-agua">1,2</span> L / 2,4 L</span>
+      </div>
+      <div class="flex gap-1.5" id="jc-copos"></div>
+      <div class="flex gap-2 mt-3">
+        <button onclick="jornada_da_cliente_agua(1)" class="flex-1 rounded-xl py-2 text-sm font-semibold text-white" style="background:#6F760A">+ 200 ml</button>
+        <button onclick="jornada_da_cliente_agua(-1)" class="rounded-xl py-2 px-4 text-sm font-semibold" style="background:#F4F5E2;color:#6F760A">−</button>
+      </div>
+    </div>
+
+    <div class="av-card p-4">
+      <p class="text-[.68rem] uppercase tracking-widest mb-2" style="color:#A67B01">Próximo atendimento</p>
+      <div class="flex gap-3">
+        <div class="rounded-2xl px-3 py-2 text-center text-white flex-none" style="background:#4F5504">
+          <p class="text-lg font-bold leading-none">21</p>
+          <p class="text-[.6rem] uppercase tracking-wider">mar</p>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold" style="color:#4F5504">Retorno · Avaliação metabólica</p>
+          <p class="text-xs text-neutral-500">Sexta, 15h30 · Dra. Marcela Andrade</p>
+          <p class="text-xs text-neutral-500">Unidade Batel · R. Bispo Dom José, 2158 — Curitiba</p>
+        </div>
+      </div>
+      <div id="jc-mapa" class="mt-3 rounded-xl h-20 relative overflow-hidden" style="background:#EFEEDC">
+        <div class="absolute inset-0 opacity-60" style="background:repeating-linear-gradient(45deg,#E4E3C6 0 12px,#EFEEDC 12px 24px)"></div>
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+          <span class="text-xl">📍</span>
+          <p class="text-[.65rem] font-semibold" style="color:#4F5504">Ávera Batel · 3,4 km</p>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-3">
+        <button onclick="jornada_da_cliente_confirmar(this)" class="flex-1 rounded-xl py-2.5 text-sm font-semibold text-white" style="background:#8D8602">Confirmar presença</button>
+        <button onclick="mostrarTela('chat-e-suporte')" class="rounded-xl py-2.5 px-4 text-sm font-semibold" style="background:#F4F5E2;color:#6F760A">Remarcar</button>
+      </div>
+      <p id="jc-conf" class="hidden mt-2 text-xs font-medium" style="color:#4F5504">✓ Presença confirmada — a clínica foi avisada no WhatsApp.</p>
+    </div>
+
+    <div>
+      <p class="text-[.68rem] uppercase tracking-widest mb-2 px-1" style="color:#A67B01">Atalhos</p>
+      <div class="grid grid-cols-2 gap-3">
+        <button class="av-atalho" onclick="mostrarTela('pre-anamnese')">
+          <span class="text-xl">📝</span>
+          <span class="text-sm font-semibold" style="color:#4F5504">Pré-anamnese</span>
+          <span class="text-[.7rem] text-neutral-500">Pendente para 21/03</span>
+          <span class="av-chip self-start" style="background:#FBEFD2;color:#A67B01">1 pendência</span>
+        </button>
+        <button class="av-atalho" onclick="mostrarTela('chat-e-suporte')">
+          <span class="text-xl">💬</span>
+          <span class="text-sm font-semibold" style="color:#4F5504">Chat com a equipe</span>
+          <span class="text-[.7rem] text-neutral-500">Bruna respondeu às 09h12</span>
+          <span class="av-chip self-start" style="background:#F4F5E2;color:#6F760A">2 novas</span>
+        </button>
+        <button class="av-atalho" onclick="mostrarTela('ficha-da-cliente')">
+          <span class="text-xl">📁</span>
+          <span class="text-sm font-semibold" style="color:#4F5504">Documentos</span>
+          <span class="text-[.7rem] text-neutral-500">Exames, laudos e termos</span>
+        </button>
+        <button class="av-atalho" onclick="mostrarTela('check-in-diario')">
+          <span class="text-xl">🌤️</span>
+          <span class="text-sm font-semibold" style="color:#4F5504">Check-in diário</span>
+          <span class="text-[.7rem] text-neutral-500">Sono, energia e humor</span>
+        </button>
+      </div>
+    </div>
+
+    <button onclick="mostrarTela('painel-profissional')" class="w-full rounded-2xl py-3 text-sm font-semibold border" style="border-color:#C4BC00;color:#6F760A;background:#FDFDF6">
+      Entrar como profissional Ávera
+    </button>
+  </div>
+
+  <script>
+    function jornada_da_cliente_toggle(el){
+      el.classList.toggle('feito');
+      jornada_da_cliente_recalc();
+    }
+    function jornada_da_cliente_recalc(){
+      var itens=document.querySelectorAll('#jc-lista .av-item');
+      var f=document.querySelectorAll('#jc-lista .av-item.feito').length;
+      document.getElementById('jc-contador').textContent=f+' de '+itens.length;
+      var pct=Math.round((f/itens.length)*70)+Math.round(jcAgua/12*30);
+      document.getElementById('jc-barra').style.width=pct+'%';
+      document.getElementById('jc-pct').textContent=pct+'%';
+      var av=document.getElementById('jc-aviso');
+      if(f===itens.length){av.textContent='Protocolo do dia concluído! Dra. Marcela recebeu sua atualização.';av.classList.remove('hidden');}
+      else{av.classList.add('hidden');}
+    }
+    var jcAgua=6;
+    function jornada_da_cliente_copos(){
+      var h='';
+      for(var i=0;i<12;i++){
+        h+='<button onclick="jornada_da_cliente_setAgua('+(i+1)+')" class="flex-1 h-7 rounded-md" style="background:'+(i<jcAgua?'#8D8602':'#EFEEDC')+'"></button>';
+      }
+      document.getElementById('jc-copos').innerHTML=h;
+      document.getElementById('jc-agua').textContent=(jcAgua*0.2).toFixed(1).replace('.',',');
+      jornada_da_cliente_recalc();
+    }
+    function jornada_da_cliente_setAgua(n){jcAgua=n;jornada_da_cliente_copos();}
+    function jornada_da_cliente_agua(d){jcAgua=Math.max(0,Math.min(12,jcAgua+d));jornada_da_cliente_copos();}
+    function jornada_da_cliente_confirmar(btn){
+      btn.textContent='Presença confirmada ✓';
+      btn.style.background='#4F5504';
+      document.getElementById('jc-conf').classList.remove('hidden');
+    }
+    jornada_da_cliente_copos();
+  </script>
+</section>
+
     <!-- TELAS -->
   </main>
 
