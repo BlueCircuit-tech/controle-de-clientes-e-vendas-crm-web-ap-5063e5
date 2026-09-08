@@ -834,6 +834,278 @@ tailwind.config = {
   </script>
 </section>
 
+    <section data-tela="painel-profissional" class="hidden">
+  <style>
+    .pp-card{background:#fff;border:1px solid #eceadb;border-radius:1rem;box-shadow:0 1px 2px rgba(79,85,4,.05)}
+    .pp-chip{font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
+    .pp-tab{flex:1;padding:8px 0;font-size:12px;font-weight:600;border-radius:.6rem;transition:.15s}
+    .pp-tab-on{background:#4F5504;color:#F7F5E6}
+    .pp-tab-off{color:#6F760A}
+    .pp-hora{font-variant-numeric:tabular-nums;font-weight:700;color:#4F5504}
+  </style>
+
+  <div class="px-4 pt-4 pb-28 bg-[#FBFAF3] min-h-screen">
+
+    <div class="flex items-start justify-between mb-4">
+      <div>
+        <p class="text-[11px] uppercase tracking-widest text-[#A67B01] font-semibold">Terça, 18 de março</p>
+        <h2 class="text-xl font-semibold text-[#4F5504] leading-tight">Olá, Dra. Marina Bezerra</h2>
+        <p class="text-xs text-[#6F760A] mt-0.5">Nutrologia • Unidade Aldeota</p>
+      </div>
+      <button onclick="mostrarTela('chat-e-suporte')" class="relative w-11 h-11 rounded-xl bg-[#4F5504] text-[#F7F5E6] flex items-center justify-center text-lg">
+        💬
+        <span class="absolute -top-1 -right-1 bg-[#C4BC00] text-[#4F5504] text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">4</span>
+      </button>
+    </div>
+
+    <div class="grid grid-cols-3 gap-2 mb-4">
+      <div class="pp-card p-3">
+        <p class="text-[10px] uppercase text-[#A67B01] font-semibold tracking-wide">Hoje</p>
+        <p class="text-2xl font-bold text-[#4F5504] leading-none mt-1">7</p>
+        <p class="text-[11px] text-[#6F760A]">atendimentos</p>
+      </div>
+      <div class="pp-card p-3">
+        <p class="text-[10px] uppercase text-[#A67B01] font-semibold tracking-wide">Mês</p>
+        <p class="text-2xl font-bold text-[#4F5504] leading-none mt-1">128</p>
+        <p class="text-[11px] text-[#6F760A]">consultas</p>
+      </div>
+      <div class="pp-card p-3">
+        <p class="text-[10px] uppercase text-[#A67B01] font-semibold tracking-wide">Faturado</p>
+        <p class="text-lg font-bold text-[#4F5504] leading-none mt-1.5">R$ 61,4k</p>
+        <p class="text-[11px] text-[#8D8602] font-semibold">▲ 12% vs. fev</p>
+      </div>
+    </div>
+
+    <div class="pp-card p-3 mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <p class="text-xs font-semibold text-[#4F5504]">Meta de faturamento — março</p>
+        <span class="text-[11px] font-bold text-[#A67B01]">82%</span>
+      </div>
+      <div class="h-2.5 rounded-full bg-[#EFEDDC] overflow-hidden">
+        <div class="h-full rounded-full" style="width:82%;background:linear-gradient(90deg,#6F760A,#C4BC00)"></div>
+      </div>
+      <p class="text-[11px] text-[#6F760A] mt-2">R$ 61.400 de R$ 75.000 • faltam 9 consultas</p>
+    </div>
+
+    <div class="flex gap-1.5 p-1 rounded-xl bg-[#EFEDDC] mb-3">
+      <button id="pp-tab-agenda" onclick="painel_profissional_aba('agenda')" class="pp-tab pp-tab-on">Agenda do dia</button>
+      <button id="pp-tab-pendencias" onclick="painel_profissional_aba('pendencias')" class="pp-tab pp-tab-off">Pendências</button>
+      <button id="pp-tab-retornos" onclick="painel_profissional_aba('retornos')" class="pp-tab pp-tab-off">Retornos</button>
+    </div>
+
+    <div id="pp-painel-agenda">
+      <div class="space-y-2">
+        <div onclick="painel_profissional_abrir('Luciana Amorim Sales')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
+          <div class="text-center w-12">
+            <p class="pp-hora text-sm">08:30</p>
+            <p class="text-[10px] text-[#A67B01]">50 min</p>
+          </div>
+          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-[#3D4103] truncate">Luciana Amorim Sales</p>
+            <p class="text-[11px] text-[#6F760A]">Retorno • Protocolo Equilíbrio Hormonal</p>
+          </div>
+          <span class="pp-chip bg-[#DDF0C9] text-[#4F5504]">Concluída</span>
+        </div>
+
+        <div onclick="painel_profissional_abrir('Renata Coelho Vasconcelos')" class="pp-card p-3 flex items-center gap-3 border-l-4 border-l-[#C4BC00] active:bg-[#F5F3E2] cursor-pointer">
+          <div class="text-center w-12">
+            <p class="pp-hora text-sm">10:00</p>
+            <p class="text-[10px] text-[#A67B01]">60 min</p>
+          </div>
+          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-[#3D4103] truncate">Renata Coelho Vasconcelos</p>
+            <p class="text-[11px] text-[#6F760A]">1ª consulta • pré-anamnese enviada</p>
+          </div>
+          <span class="pp-chip bg-[#C4BC00] text-[#4F5504]">Agora</span>
+        </div>
+
+        <div onclick="painel_profissional_abrir('Beatriz Nogueira Lima')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
+          <div class="text-center w-12">
+            <p class="pp-hora text-sm">11:30</p>
+            <p class="text-[10px] text-[#A67B01]">40 min</p>
+          </div>
+          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-[#3D4103] truncate">Beatriz Nogueira Lima</p>
+            <p class="text-[11px] text-[#6F760A]">Avaliação de exames • Teleconsulta</p>
+          </div>
+          <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">Online</span>
+        </div>
+
+        <div onclick="painel_profissional_abrir('Sônia Maria Peixoto')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
+          <div class="text-center w-12">
+            <p class="pp-hora text-sm">14:00</p>
+            <p class="text-[10px] text-[#A67B01]">50 min</p>
+          </div>
+          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-[#3D4103] truncate">Sônia Maria Peixoto</p>
+            <p class="text-[11px] text-[#6F760A]">Retorno 90 dias • Menopausa</p>
+          </div>
+          <span class="pp-chip bg-[#F6E7C4] text-[#A67B01]">Pgto. pend.</span>
+        </div>
+
+        <div onclick="painel_profissional_abrir('Ana Cláudia Ferreira')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
+          <div class="text-center w-12">
+            <p class="pp-hora text-sm">15:30</p>
+            <p class="text-[10px] text-[#A67B01]">60 min</p>
+          </div>
+          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-[#3D4103] truncate">Ana Cláudia Ferreira</p>
+            <p class="text-[11px] text-[#6F760A]">1ª consulta • indicação Dra. Helena</p>
+          </div>
+          <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">Aldeota</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="pp-painel-pendencias" class="hidden space-y-2">
+      <div class="pp-card p-3 flex items-start gap-3">
+        <span class="text-lg">📝</span>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-[#3D4103]">Evolução não finalizada</p>
+          <p class="text-[11px] text-[#6F760A]">Luciana Amorim Sales • consulta de hoje 08:30</p>
+          <button onclick="mostrarTela('ficha-da-cliente')" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#EFEDDC] px-3 py-1.5 rounded-lg">Abrir prontuário</button>
+        </div>
+      </div>
+      <div class="pp-card p-3 flex items-start gap-3">
+        <span class="text-lg">📄</span>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-[#3D4103]">Pré-anamnese não respondida</p>
+          <p class="text-[11px] text-[#6F760A]">Ana Cláudia Ferreira • consulta às 15:30</p>
+          <button onclick="painel_profissional_lembrete(this)" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#C4BC00] px-3 py-1.5 rounded-lg">Reenviar por WhatsApp</button>
+        </div>
+      </div>
+      <div class="pp-card p-3 flex items-start gap-3">
+        <span class="text-lg">🧾</span>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-[#3D4103]">Termo de consentimento pendente</p>
+          <p class="text-[11px] text-[#6F760A]">Sônia Maria Peixoto • gravação de consulta</p>
+          <button onclick="mostrarTela('ficha-da-cliente')" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#EFEDDC] px-3 py-1.5 rounded-lg">Ver documentos</button>
+        </div>
+      </div>
+      <div class="pp-card p-3 flex items-start gap-3">
+        <span class="text-lg">💳</span>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-[#3D4103]">Parcela 2/3 em aberto — R$ 480,00</p>
+          <p class="text-[11px] text-[#6F760A]">Sônia Maria Peixoto • venceu em 14/03</p>
+          <button onclick="painel_profissional_lembrete(this)" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#C4BC00] px-3 py-1.5 rounded-lg">Enviar cobrança</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pp-painel-retornos" class="hidden space-y-2">
+      <div onclick="painel_profissional_abrir('Patrícia Uchôa Melo')" class="pp-card p-3 flex items-center gap-3 cursor-pointer active:bg-[#F5F3E2]">
+        <div class="w-9 h-9 rounded-full bg-[#6F760A] text-[#F7F5E6] flex items-center justify-center text-xs font-bold">PU</div>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-[#3D4103]">Patrícia Uchôa Melo</p>
+          <p class="text-[11px] text-[#6F760A]">Retorno vencido há 21 dias • último: 25/02</p>
+        </div>
+        <span class="pp-chip bg-[#F6DCC4] text-[#A67B01]">Atrasado</span>
+      </div>
+      <div onclick="painel_profissional_abrir('Karine Duarte Rocha')" class="pp-card p-3 flex items-center gap-3 cursor-pointer active:bg-[#F5F3E2]">
+        <div class="w-9 h-9 rounded-full bg-[#8D8602] text-[#F7F5E6] flex items-center justify-center text-xs font-bold">KD</div>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-[#3D4103]">Karine Duarte Rocha</p>
+          <p class="text-[11px] text-[#6F760A]">Agendar retorno de 30 dias • até 22/03</p>
+        </div>
+        <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">Esta semana</span>
+      </div>
+      <div onclick="painel_profissional_abrir('Juliana Barros Tavares')" class="pp-card p-3 flex items-center gap-3 cursor-pointer active:bg-[#F5F3E2]">
+        <div class="w-9 h-9 rounded-full bg-[#A67B01] text-[#F7F5E6] flex items-center justify-center text-xs font-bold">JB</div>
+        <div class="flex-1">
+          <p class="text-sm font-semibold text-[#3D4103]">Juliana Barros Tavares</p>
+          <p class="text-[11px] text-[#6F760A]">Fim do protocolo em 02/04 • renovar plano</p>
+        </div>
+        <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">15 dias</span>
+      </div>
+    </div>
+
+    <h3 class="text-sm font-semibold text-[#4F5504] mt-6 mb-2 flex items-center gap-2">
+      <span class="w-1.5 h-1.5 rounded-full bg-[#A67B01]"></span> Alertas clínicos
+    </h3>
+    <div class="space-y-2">
+      <div class="rounded-2xl p-3 bg-[#FDF3E2] border border-[#E8CE93]">
+        <p class="text-[11px] font-bold text-[#A67B01] uppercase tracking-wide">Interação medicamentosa</p>
+        <p class="text-sm text-[#4F5504] mt-1 leading-snug">Sônia M. Peixoto — Levotiroxina + Cálcio quelato no mesmo horário. Sugerir intervalo de 4h.</p>
+        <button onclick="mostrarTela('ficha-da-cliente')" class="mt-2 text-[11px] font-semibold text-[#A67B01] underline">Ver prescrição</button>
+      </div>
+      <div class="rounded-2xl p-3 bg-[#F4F5E0] border border-[#D5D68A]">
+        <p class="text-[11px] font-bold text-[#6F760A] uppercase tracking-wide">Risco de depleção</p>
+        <p class="text-sm text-[#4F5504] mt-1 leading-snug">Renata C. Vasconcelos — uso contínuo de omeprazol há 14 meses: avaliar B12 e magnésio.</p>
+        <button onclick="mostrarTela('pre-anamnese')" class="mt-2 text-[11px] font-semibold text-[#6F760A] underline">Abrir pré-anamnese</button>
+      </div>
+    </div>
+
+    <div class="mt-4 rounded-2xl p-4" style="background:linear-gradient(135deg,#4F5504,#6F760A)">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-base">✦</span>
+        <p class="text-[11px] font-bold text-[#C4BC00] uppercase tracking-widest">Notificações da IA Ávera</p>
+      </div>
+      <div class="space-y-2">
+        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full text-left bg-white/10 rounded-xl p-3">
+          <p class="text-sm text-[#F7F5E6] leading-snug">Beatriz N. Lima registrou queda de energia por 5 dias seguidos no check-in. Sugestão: revisar sono e ferritina.</p>
+          <p class="text-[11px] text-[#C4BC00] mt-1 font-semibold">Ver jornada da cliente →</p>
+        </button>
+        <button onclick="mostrarTela('ficha-da-cliente')" class="w-full text-left bg-white/10 rounded-xl p-3">
+          <p class="text-sm text-[#F7F5E6] leading-snug">Resumo pré-consulta de Renata C. Vasconcelos pronto para revisão (10:00).</p>
+          <p class="text-[11px] text-[#C4BC00] mt-1 font-semibold">Revisar resumo →</p>
+        </button>
+      </div>
+    </div>
+
+    <button onclick="mostrarTela('ficha-da-cliente')" class="mt-4 w-full py-3.5 rounded-2xl bg-[#4F5504] text-[#F7F5E6] font-semibold text-sm">Iniciar atendimento das 10:00</button>
+    <p id="pp-toast" class="hidden mt-3 text-center text-[12px] font-semibold text-[#4F5504] bg-[#DDF0C9] py-2.5 rounded-xl"></p>
+  </div>
+
+  <div id="pp-modal" class="hidden fixed inset-0 z-50 bg-[#2A2C02]/50 flex items-end justify-center">
+    <div class="w-full max-w-[430px] bg-[#FBFAF3] rounded-t-3xl p-5">
+      <div class="w-10 h-1 bg-[#D8D6BE] rounded-full mx-auto mb-4"></div>
+      <div class="flex items-center gap-3">
+        <div id="pp-modal-ini" class="w-12 h-12 rounded-full bg-[#6F760A] text-[#F7F5E6] flex items-center justify-center font-bold"></div>
+        <div>
+          <p id="pp-modal-nome" class="font-semibold text-[#3D4103]"></p>
+          <p class="text-[11px] text-[#6F760A]">Cliente ativa • Protocolo em andamento</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2 mt-4">
+        <button onclick="painel_profissional_fechar();mostrarTela('ficha-da-cliente')" class="py-3 rounded-xl bg-[#4F5504] text-[#F7F5E6] text-xs font-semibold">Abrir ficha</button>
+        <button onclick="painel_profissional_fechar();mostrarTela('jornada-da-cliente')" class="py-3 rounded-xl bg-[#C4BC00] text-[#4F5504] text-xs font-semibold">Jornada diária</button>
+        <button onclick="painel_profissional_fechar();mostrarTela('pre-anamnese')" class="py-3 rounded-xl bg-[#EFEDDC] text-[#4F5504] text-xs font-semibold">Pré-anamnese</button>
+        <button onclick="painel_profissional_fechar();mostrarTela('chat-e-suporte')" class="py-3 rounded-xl bg-[#EFEDDC] text-[#4F5504] text-xs font-semibold">Mensagem</button>
+      </div>
+      <button onclick="painel_profissional_fechar()" class="mt-3 w-full py-2.5 text-xs font-semibold text-[#6F760A]">Fechar</button>
+    </div>
+  </div>
+
+  <script>
+    function painel_profissional_aba(a){
+      ['agenda','pendencias','retornos'].forEach(function(k){
+        document.getElementById('pp-painel-'+k).classList.toggle('hidden',k!==a);
+        var t=document.getElementById('pp-tab-'+k);
+        t.className='pp-tab '+(k===a?'pp-tab-on':'pp-tab-off');
+      });
+    }
+    function painel_profissional_abrir(nome){
+      document.getElementById('pp-modal-nome').textContent=nome;
+      document.getElementById('pp-modal-ini').textContent=nome.split(' ')[0][0]+nome.split(' ')[1][0];
+      document.getElementById('pp-modal').classList.remove('hidden');
+    }
+    function painel_profissional_fechar(){document.getElementById('pp-modal').classList.add('hidden');}
+    function painel_profissional_lembrete(btn){
+      btn.textContent='Enviado ✓';
+      btn.className='mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#DDF0C9] px-3 py-1.5 rounded-lg';
+      var t=document.getElementById('pp-toast');
+      t.textContent='Mensagem enviada por WhatsApp às 09:42';
+      t.classList.remove('hidden');
+      setTimeout(function(){t.classList.add('hidden');},2600);
+    }
+  </script>
+</section>
+
     <!-- TELAS -->
   </main>
 
