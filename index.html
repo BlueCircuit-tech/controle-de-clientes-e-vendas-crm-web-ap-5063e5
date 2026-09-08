@@ -288,6 +288,276 @@ tailwind.config = {
   </script>
 </section>
 
+    <section data-tela="check-in-diario" class="hidden">
+  <style>
+    .cid-card{background:#fff;border:1px solid #ece9d3;border-radius:1rem;padding:1rem}
+    .cid-lbl{font-size:.8rem;font-weight:600;color:#4F5504;letter-spacing:.02em}
+    .cid-op{flex:1;padding:.55rem 0;border-radius:.7rem;border:1px solid #e5e2c8;background:#fbfaf3;font-size:1.05rem;transition:.15s}
+    .cid-op.sel{background:#4F5504;border-color:#4F5504;transform:translateY(-2px)}
+    .cid-chip{padding:.35rem .7rem;border-radius:999px;border:1px solid #d9d5b0;font-size:.72rem;color:#6F760A;background:#fbfaf3}
+    .cid-chip.on{background:#C4BC00;border-color:#C4BC00;color:#3d4103;font-weight:600}
+  </style>
+
+  <div class="px-4 pt-4 pb-28" style="background:#faf9f2">
+
+    <div class="rounded-2xl p-4 mb-4" style="background:linear-gradient(135deg,#4F5504,#8D8602)">
+      <p class="text-[11px] uppercase tracking-widest" style="color:#e4e2b8">Terça, 18 de março</p>
+      <h2 class="text-white text-xl font-semibold mt-1">Bom dia, Marina</h2>
+      <p class="text-[13px] mt-1" style="color:#eceabb">Dia 12 do protocolo · Reequilíbrio Hormonal</p>
+      <div class="mt-3 flex items-center gap-2">
+        <div class="flex-1 h-2 rounded-full" style="background:#ffffff33">
+          <div class="h-2 rounded-full" style="width:60%;background:#C4BC00"></div>
+        </div>
+        <span class="text-[11px] text-white font-medium">9 de 15 check-ins</span>
+      </div>
+    </div>
+
+    <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
+      <button onclick="mostrarTela('jornada-da-cliente')" class="cid-chip whitespace-nowrap">← Jornada</button>
+      <button onclick="mostrarTela('pre-anamnese')" class="cid-chip whitespace-nowrap">Pré-anamnese</button>
+      <button onclick="mostrarTela('chat-e-suporte')" class="cid-chip whitespace-nowrap">Falar com a Dra. Helena</button>
+    </div>
+
+    <div class="cid-card mb-3">
+      <div class="flex justify-between items-baseline">
+        <span class="cid-lbl">😴 Como foi seu sono?</span>
+        <span id="cid-v-sono" class="text-[11px]" style="color:#A67B01">—</span>
+      </div>
+      <div class="flex gap-1.5 mt-2" data-grupo="sono">
+        <button type="button" class="cid-op" data-v="1" data-t="Muito ruim">😫</button>
+        <button type="button" class="cid-op" data-v="2" data-t="Ruim">😕</button>
+        <button type="button" class="cid-op" data-v="3" data-t="Regular">😐</button>
+        <button type="button" class="cid-op" data-v="4" data-t="Bom">🙂</button>
+        <button type="button" class="cid-op" data-v="5" data-t="Ótimo">😄</button>
+      </div>
+      <div class="flex gap-1.5 mt-3 flex-wrap" id="cid-horas">
+        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'menos de 5h')">menos de 5h</button>
+        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'5h a 6h')">5h a 6h</button>
+        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'7h a 8h')">7h a 8h</button>
+        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'mais de 8h')">mais de 8h</button>
+      </div>
+    </div>
+
+    <div class="cid-card mb-3">
+      <div class="flex justify-between items-baseline">
+        <span class="cid-lbl">⚡ Nível de energia</span>
+        <span id="cid-v-energia" class="text-[11px]" style="color:#A67B01">—</span>
+      </div>
+      <div class="flex gap-1.5 mt-2" data-grupo="energia">
+        <button type="button" class="cid-op" data-v="1" data-t="Exausta">🪫</button>
+        <button type="button" class="cid-op" data-v="2" data-t="Baixa">😪</button>
+        <button type="button" class="cid-op" data-v="3" data-t="Média">🙂</button>
+        <button type="button" class="cid-op" data-v="4" data-t="Boa">💪</button>
+        <button type="button" class="cid-op" data-v="5" data-t="Muito boa">🔋</button>
+      </div>
+    </div>
+
+    <div class="cid-card mb-3">
+      <div class="flex justify-between items-baseline">
+        <span class="cid-lbl">🌿 Intestino hoje</span>
+        <span id="cid-v-intestino" class="text-[11px]" style="color:#A67B01">—</span>
+      </div>
+      <div class="flex gap-1.5 mt-2" data-grupo="intestino">
+        <button type="button" class="cid-op" data-v="1" data-t="Preso">🚫</button>
+        <button type="button" class="cid-op" data-v="2" data-t="Difícil">😖</button>
+        <button type="button" class="cid-op" data-v="3" data-t="Normal">✅</button>
+        <button type="button" class="cid-op" data-v="4" data-t="Solto">💧</button>
+        <button type="button" class="cid-op" data-v="5" data-t="Diarreia">⚠️</button>
+      </div>
+    </div>
+
+    <div class="cid-card mb-3">
+      <div class="flex justify-between items-baseline">
+        <span class="cid-lbl">💛 Humor</span>
+        <span id="cid-v-humor" class="text-[11px]" style="color:#A67B01">—</span>
+      </div>
+      <div class="flex gap-1.5 mt-2" data-grupo="humor">
+        <button type="button" class="cid-op" data-v="1" data-t="Triste">😢</button>
+        <button type="button" class="cid-op" data-v="2" data-t="Irritada">😠</button>
+        <button type="button" class="cid-op" data-v="3" data-t="Neutra">😐</button>
+        <button type="button" class="cid-op" data-v="4" data-t="Tranquila">😌</button>
+        <button type="button" class="cid-op" data-v="5" data-t="Feliz">🤩</button>
+      </div>
+    </div>
+
+    <div class="cid-card mb-3">
+      <div class="flex justify-between items-baseline">
+        <span class="cid-lbl">🌀 Estresse</span>
+        <span id="cid-v-estresse" class="text-[11px]" style="color:#A67B01">—</span>
+      </div>
+      <div class="flex gap-1.5 mt-2" data-grupo="estresse">
+        <button type="button" class="cid-op" data-v="1" data-t="Nenhum">🧘</button>
+        <button type="button" class="cid-op" data-v="2" data-t="Leve">🙂</button>
+        <button type="button" class="cid-op" data-v="3" data-t="Moderado">😬</button>
+        <button type="button" class="cid-op" data-v="4" data-t="Alto">😰</button>
+        <button type="button" class="cid-op" data-v="5" data-t="No limite">🥵</button>
+      </div>
+    </div>
+
+    <div class="cid-card mb-3">
+      <span class="cid-lbl">💊 Segui o protocolo de hoje</span>
+      <div class="mt-2 space-y-2" id="cid-protocolo">
+        <label class="flex items-center gap-3 text-[13px] text-stone-700">
+          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> Magnésio dimalato · 1 cáp. após o almoço
+        </label>
+        <label class="flex items-center gap-3 text-[13px] text-stone-700">
+          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> Chá de camomila 30 min antes de dormir
+        </label>
+        <label class="flex items-center gap-3 text-[13px] text-stone-700">
+          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> Caminhada leve de 25 minutos
+        </label>
+        <label class="flex items-center gap-3 text-[13px] text-stone-700">
+          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> 2 litros de água ao longo do dia
+        </label>
+      </div>
+      <p class="text-[11px] mt-2" style="color:#A67B01"><span id="cid-prot-n">0</span> de 4 itens marcados</p>
+    </div>
+
+    <div class="cid-card mb-3">
+      <span class="cid-lbl">📝 Observações do dia</span>
+      <textarea id="cid-obs" rows="3" oninput="check_in_diario_obs()" placeholder="Ex.: acordei com dor de cabeça, melhorou depois do almoço..." class="w-full mt-2 text-[13px] p-3 rounded-xl border outline-none" style="border-color:#e5e2c8;background:#fbfaf3"></textarea>
+      <p class="text-[11px] text-right" style="color:#8D8602"><span id="cid-obs-n">0</span>/300</p>
+    </div>
+
+    <div class="cid-card mb-4">
+      <span class="cid-lbl">📷 Anexar foto ou exame</span>
+      <div class="flex gap-2 mt-2">
+        <button type="button" onclick="check_in_diario_foto('Foto do prato · almoço')" class="flex-1 py-3 rounded-xl text-[12px] font-medium text-white" style="background:#6F760A">Foto da refeição</button>
+        <button type="button" onclick="check_in_diario_foto('Exame · Vitamina D')" class="flex-1 py-3 rounded-xl text-[12px] font-medium" style="background:#f3f1de;color:#4F5504">Documento</button>
+      </div>
+      <div id="cid-anexos" class="mt-3 space-y-2"></div>
+    </div>
+
+    <button type="button" onclick="check_in_diario_enviar()" class="w-full py-4 rounded-2xl text-white font-semibold shadow-lg" style="background:linear-gradient(120deg,#4F5504,#8D8602)">Enviar check-in de hoje</button>
+    <p class="text-center text-[11px] mt-2" style="color:#8D8602">A Dra. Helena Marques recebe uma notificação a cada envio.</p>
+
+    <div class="mt-6">
+      <p class="cid-lbl mb-2">Últimos check-ins</p>
+      <div class="space-y-2" id="cid-historico">
+        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full cid-card flex items-center justify-between text-left">
+          <div><p class="text-[13px] font-semibold text-stone-800">17 de março</p><p class="text-[11px] text-stone-500">Sono bom · Energia média · Humor tranquila</p></div>
+          <span class="text-lg">🙂</span>
+        </button>
+        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full cid-card flex items-center justify-between text-left">
+          <div><p class="text-[13px] font-semibold text-stone-800">16 de março</p><p class="text-[11px] text-stone-500">Sono ruim · Energia baixa · Estresse alto</p></div>
+          <span class="text-lg">😕</span>
+        </button>
+        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full cid-card flex items-center justify-between text-left">
+          <div><p class="text-[13px] font-semibold text-stone-800">15 de março</p><p class="text-[11px] text-stone-500">Sono ótimo · Energia boa · Intestino normal</p></div>
+          <span class="text-lg">😄</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cid-modal" class="hidden fixed inset-0 z-50 items-end justify-center" style="background:#2b2d0899">
+    <div class="w-full max-w-[430px] rounded-t-3xl bg-white p-6 pb-8">
+      <div class="w-12 h-1.5 rounded-full mx-auto mb-5" style="background:#e5e2c8"></div>
+      <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" style="background:#f0efd6">✅</div>
+      <h3 class="text-center text-lg font-semibold mt-3" style="color:#4F5504">Check-in enviado!</h3>
+      <p class="text-center text-[13px] text-stone-600 mt-1">Sua evolução foi atualizada no painel da Dra. Helena Marques.</p>
+      <div class="mt-4 rounded-xl p-3 text-[12px] leading-relaxed" style="background:#faf9f2;color:#4F5504" id="cid-resumo"></div>
+      <div class="mt-4 rounded-xl p-3 text-[12px]" style="background:#fdf6e3;color:#7a5c02">
+        <b>Leitura da IA Ávera:</b> <span id="cid-ia">—</span>
+      </div>
+      <button onclick="mostrarTela('jornada-da-cliente')" class="w-full mt-5 py-3.5 rounded-2xl text-white font-semibold" style="background:#4F5504">Ver minha jornada</button>
+      <button onclick="mostrarTela('chat-e-suporte')" class="w-full mt-2 py-3 rounded-2xl font-medium text-[13px]" style="background:#f3f1de;color:#4F5504">Enviar recado para a profissional</button>
+    </div>
+  </div>
+
+  <script>
+    var check_in_diario_dados = {sono:null,energia:null,intestino:null,humor:null,estresse:null,horas:null,anexos:[]};
+
+    document.querySelectorAll('[data-tela="check-in-diario"] [data-grupo]').forEach(function(g){
+      var nome = g.getAttribute('data-grupo');
+      g.querySelectorAll('.cid-op').forEach(function(b){
+        b.addEventListener('click', function(){
+          g.querySelectorAll('.cid-op').forEach(function(x){x.classList.remove('sel')});
+          b.classList.add('sel');
+          check_in_diario_dados[nome] = {v:parseInt(b.dataset.v), t:b.dataset.t};
+          document.getElementById('cid-v-'+nome).textContent = b.dataset.t;
+        });
+      });
+    });
+
+    function check_in_diario_horas(el, txt){
+      document.querySelectorAll('#cid-horas .cid-chip').forEach(function(c){c.classList.remove('on')});
+      el.classList.add('on');
+      check_in_diario_dados.horas = txt;
+      var s = document.getElementById('cid-v-sono');
+      s.textContent = (check_in_diario_dados.sono ? check_in_diario_dados.sono.t+' · ' : '') + txt;
+    }
+
+    function check_in_diario_conta(){
+      var m = document.querySelectorAll('#cid-protocolo input:checked').length;
+      document.getElementById('cid-prot-n').textContent = m;
+    }
+
+    function check_in_diario_obs(){
+      document.getElementById('cid-obs-n').textContent = document.getElementById('cid-obs').value.length;
+    }
+
+    function check_in_diario_foto(nome){
+      check_in_diario_dados.anexos.push(nome);
+      var box = document.getElementById('cid-anexos');
+      var d = document.createElement('div');
+      d.className = 'flex items-center justify-between rounded-xl px-3 py-2';
+      d.style.background = '#f7f6e9';
+      d.innerHTML = '<span class="text-[12px]" style="color:#4F5504">📎 '+nome+'</span>';
+      var b = document.createElement('button');
+      b.textContent = 'remover';
+      b.className = 'text-[11px]';
+      b.style.color = '#A67B01';
+      b.onclick = function(){
+        box.removeChild(d);
+        var i = check_in_diario_dados.anexos.indexOf(nome);
+        if(i>-1) check_in_diario_dados.anexos.splice(i,1);
+      };
+      d.appendChild(b);
+      box.appendChild(d);
+    }
+
+    function check_in_diario_enviar(){
+      var d = check_in_diario_dados;
+      var falta = ['sono','energia','intestino','humor','estresse'].filter(function(k){return !d[k]});
+      if(falta.length){
+        var alvo = document.querySelector('[data-tela="check-in-diario"] [data-grupo="'+falta[0]+'"]');
+        alvo.parentElement.style.borderColor = '#A67B01';
+        document.getElementById('cid-v-'+falta[0]).textContent = 'responda aqui';
+        alvo.scrollIntoView({behavior:'smooth', block:'center'});
+        return;
+      }
+      var prot = document.querySelectorAll('#cid-protocolo input:checked').length;
+      var obs = document.getElementById('cid-obs').value.trim();
+      var linhas = 'Sono: <b>'+d.sono.t+'</b>'+(d.horas?' ('+d.horas+')':'')+
+        '<br>Energia: <b>'+d.energia.t+'</b> · Intestino: <b>'+d.intestino.t+'</b>'+
+        '<br>Humor: <b>'+d.humor.t+'</b> · Estresse: <b>'+d.estresse.t+'</b>'+
+        '<br>Protocolo: <b>'+prot+'/4 itens</b>'+
+        (d.anexos.length?'<br>Anexos: <b>'+d.anexos.length+'</b> ('+d.anexos.join(', ')+')':'')+
+        (obs?'<br>Obs.: “'+obs.slice(0,120)+'”':'');
+      document.getElementById('cid-resumo').innerHTML = linhas;
+
+      var media = (d.sono.v + d.energia.v + d.humor.v + (6-d.estresse.v))/4;
+      var ia;
+      if(media >= 4) ia = 'Ótimo padrão nos últimos dias. Sono e energia em alta sustentam o protocolo — mantenha o magnésio no mesmo horário.';
+      else if(media >= 2.75) ia = 'Evolução estável. O estresse ainda puxa a energia para baixo; sugerida respiração guiada de 5 min antes de dormir.';
+      else ia = 'Sinal de atenção: queda combinada de sono e energia por 2 dias. Alerta enviado à Dra. Helena para avaliar antecipação do retorno.';
+      document.getElementById('cid-ia').textContent = ia;
+
+      var m = document.getElementById('cid-modal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+
+      var hist = document.getElementById('cid-historico');
+      var b = document.createElement('button');
+      b.className = 'w-full cid-card flex items-center justify-between text-left';
+      b.setAttribute('onclick', "mostrarTela('jornada-da-cliente')");
+      b.innerHTML = '<div><p class="text-[13px] font-semibold" style="color:#4F5504">18 de março · hoje</p><p class="text-[11px] text-stone-500">Sono '+d.sono.t.toLowerCase()+' · Energia '+d.energia.t.toLowerCase()+' · Humor '+d.humor.t.toLowerCase()+'</p></div><span class="text-lg">🌱</span>';
+      hist.insertBefore(b, hist.firstChild);
+    }
+  </script>
+</section>
+
     <!-- TELAS -->
   </main>
 
