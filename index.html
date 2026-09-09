@@ -329,6 +329,290 @@
     </script>
 </section>
 
+    <section data-tela="jornada-diaria" class="hidden">
+  <div class="jbg mx-auto max-w-[430px] min-h-screen pb-20 relative">
+    <!-- Header -->
+    <div class="jd-header px-5 pt-6 pb-5 rounded-b-3xl">
+      <button onclick="mostrarTela('dashboard-profissional')" class="jd-back w-9 h-9 flex items-center justify-center rounded-full bg-white/15 mr-3 flex-shrink-0">
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <div>
+        <p class="text-jd-green-bright text-xs font-medium">Protocolo em andamento</p>
+        <h1 class="text-white text-xl font-bold leading-tight">Jornada Diária</h1>
+      </div>
+    </div>
+
+    <!-- Dia Selecionado -->
+    <div class="px-4 mt-4">
+      <div class="jd-card flex items-center justify-between p-4">
+        <div>
+          <p class="text-xs text-jd-green-dim font-medium">Seguindo o protocolo</p>
+          <p class="text-white font-bold text-lg">Dia 3 de 30</p>
+        </div>
+        <div class="jd-circular-progress w-14 h-14">
+          <svg viewBox="0 0 60 60" class="w-full h-full">
+            <circle cx="30" cy="30" r="25" fill="none" stroke="#4F5504" stroke-width="6"/>
+            <circle cx="30" cy="30" r="25" fill="none" stroke="#C4BC00" stroke-width="6" stroke-dasharray="157" stroke-dashoffset="110" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+          </svg>
+          <span class="jd-circ-text">30%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seletor de Dias -->
+    <div class="px-4 mt-3">
+      <div class="jd-card p-2 flex items-center justify-between" id="jd-day-selector">
+        <button onclick="jornada_diaria_selectDay(-1)" class="jd-day-btn w-9 h-9 flex items-center justify-center rounded-xl bg-jd-green-dark/40 text-jd-green-bright text-sm">‹</button>
+        <div class="flex items-center gap-1.5 flex-1 justify-center" id="jd-day-chips"></div>
+        <button onclick="jornada_diaria_selectDay(1)" class="jd-day-btn w-9 h-9 flex items-center justify-center rounded-xl bg-jd-green-dark/40 text-jd-green-bright text-sm">›</button>
+      </div>
+    </div>
+
+    <!-- Hábitos do Dia -->
+    <div class="px-4 mt-4">
+      <h2 class="text-white text-sm font-semibold mb-2.5">Hábitos de Hoje</h2>
+      <div class="grid grid-cols-2 gap-2.5" id="jd-habits-grid"></div>
+    </div>
+
+    <!-- Protocolo Personalizado -->
+    <div class="px-4 mt-4">
+      <button onclick="jornada_diaria_toggleProtocolo()" class="jd-card w-full p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-jd-green-bright/20 flex items-center justify-center">
+            <svg class="w-5 h-5 text-jd-green-bright" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h.75m3 3h.375a.375.375 0 00.375-.375v-1.125a.375.375 0 00-.375-.375h-.375m3 0h.375a.375.375 0 00.375-.375v-1.125a.375.375 0 00-.375-.375h-.375"/></svg>
+          </div>
+          <div class="text-left">
+            <p class="text-white font-semibold text-sm">Protocolo Personalizado</p>
+            <p class="text-jd-green-bright text-xs">Desintoxicação + Reposição</p>
+          </div>
+        </div>
+        <svg id="jd-prot-chevron" class="w-5 h-5 text-jd-green-dim transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+      </button>
+      <div id="jd-protocolo-expandido" class="hidden mt-2">
+        <div class="jd-card p-4 space-y-2.5" id="jd-protocolo-itens"></div>
+      </div>
+    </div>
+
+    <!-- Registro de Sintomas -->
+    <div class="px-4 mt-4">
+      <button onclick="jornada_diaria_toggleSintomas()" class="jd-card w-full p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-jd-green-bright/20 flex items-center justify-center text-lg">🏥</div>
+          <div class="text-left">
+            <p class="text-white font-semibold text-sm">Registro de Sintomas</p>
+            <p class="text-jd-green-dim text-xs">Como você está se sentindo?</p>
+          </div>
+        </div>
+        <svg id="jd-sint-chevron" class="w-5 h-5 text-jd-green-dim transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+      </button>
+      <div id="jd-sintomas-expandido" class="hidden mt-2">
+        <div class="jd-card p-4 space-y-3">
+          <div class="jd-sintom-item flex items-center justify-between p-3 rounded-xl bg-jd-green-dark/30 cursor-pointer" onclick="jornada_diaria_toggleSintoma(this)">
+            <span class="text-white text-sm">Cansaço</span>
+            <span class="jd-sintom-status text-jd-green-dim text-xs">Não informado</span>
+          </div>
+          <div class="jd-sintom-item flex items-center justify-between p-3 rounded-xl bg-jd-green-dark/30 cursor-pointer" onclick="jornada_diaria_toggleSintoma(this)">
+            <span class="text-white text-sm">Dor / Incomodação</span>
+            <span class="jd-sintom-status text-jd-green-dim text-xs">Não informado</span>
+          </div>
+          <div class="jd-sintom-item flex items-center justify-between p-3 rounded-xl bg-jd-green-dark/30 cursor-pointer" onclick="jornada_diaria_toggleSintoma(this)">
+            <span class="text-white text-sm">Energia</span>
+            <span class="jd-sintom-status text-jd-green-dim text-xs">Não informado</span>
+          </div>
+          <div class="jd-sintom-item flex items-center justify-between p-3 rounded-xl bg-jd-green-dark/30 cursor-pointer" onclick="jornada_diaria_toggleSintoma(this)">
+            <span class="text-white text-sm">Humor</span>
+            <span class="jd-sintom-status text-jd-green-dim text-xs">Não informado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Evolução -->
+    <div class="px-4 mt-4">
+      <div class="jd-card p-4">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-white font-semibold text-sm">Evolução da Semana</h3>
+          <span class="text-jd-green-bright text-xs font-medium">+12% adesão</span>
+        </div>
+        <div class="flex items-end justify-between gap-1.5 h-20" id="jd-chart"></div>
+        <div class="flex justify-between mt-1.5">
+          <span class="text-jd-green-dim text-[10px]">Seg</span>
+          <span class="text-jd-green-dim text-[10px]">Ter</span>
+          <span class="text-jd-green-dim text-[10px]">Qua</span>
+          <span class="text-jd-green-dim text-[10px]">Qui</span>
+          <span class="text-jd-green-dim text-[10px]">Sex</span>
+          <span class="text-jd-green-dim text-[10px]">Sáb</span>
+          <span class="text-jd-green-dim text-[10px]">Dom</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão Solicitar Ajuda -->
+    <div class="px-4 mt-5">
+      <button onclick="mostrarTela('consulta-e-prontuario')" class="jd-btn w-full py-3.5 rounded-2xl text-jd-green-dark font-bold text-sm flex items-center justify-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Solicitar Ajuda / Dúvidas
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const jornada_diaria_state = { selectedDay: 0, expandedProtocolo: false, expandedSintomas: false, checkedHabits: {} };
+
+    const jd_habits = [
+      { id: 'medicamento', icon: '💊', label: 'Medicamento', color: '#C4BC00' },
+      { id: 'agua', icon: '💧', label: 'Água', color: '#6F760A' },
+      { id: 'alimentacao', icon: '🥗', label: 'Alimentação', color: '#8D8602' },
+      { id: 'exercicio', icon: '🏃', label: 'Exercício', color: '#A67B01' },
+      { id: 'sono', icon: '😴', label: 'Sono', color: '#4F5504' },
+      { id: 'suplemento', icon: '🧴', label: 'Suplemento', color: '#6F760A' },
+    ];
+
+    const jd_protocolo = [
+      { nome: 'Tomar medicamento matinal', dose: '1 comprimido às 8h', ok: true },
+      { nome: 'Beber 2L de água', dose: '8 copos ao longo do dia', ok: true },
+      { nome: 'Caminhada de 30 min', dose: 'Após o almoço', ok: false },
+      { nome: 'Suplemento noturno', dose: '1 dose antes de dormir', ok: false },
+    ];
+
+    const jd_chartData = [55, 72, 45, 88, 62, 80, 68];
+    const jd_sintomCycles = [
+      ['Melhora ✨', '#C4BC00'], ['Estável ➡️', '#8D8602'], ['Piora ⚠️', '#A67B01'], ['Não informado', '#6F760A']
+    ];
+
+    function jornada_diaria_init() {
+      const grid = document.getElementById('jd-habits-grid');
+      if (grid) {
+        grid.innerHTML = jd_habits.map(h => `
+          <button onclick="jornada_diaria_checkHabit('${h.id}')" class="jd-habit-btn p-4 rounded-2xl flex flex-col items-center gap-2 transition-all duration-300" data-id="${h.id}">
+            <span class="text-3xl">${h.icon}</span>
+            <span class="text-white text-xs font-medium leading-tight">${h.label}</span>
+            <span class="jd-check-badge hidden text-[10px] font-bold px-2 py-0.5 rounded-full text-jd-green-dark">Feito</span>
+          </button>`).join('');
+      }
+
+      const protocoloItens = document.getElementById('jd-protocolo-itens');
+      if (protocoloItens) {
+        protocoloItens.innerHTML = jd_protocolo.map((p, i) => `
+          <div class="flex items-start gap-3">
+            <div class="w-5 h-5 rounded-full border-2 ${p.ok ? 'bg-jd-green-bright border-jd-green-bright' : 'border-jd-green-dim'} flex items-center justify-center mt-0.5 flex-shrink-0">
+              ${p.ok ? '<svg class="w-3 h-3 text-jd-green-dark" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>' : ''}
+            </div>
+            <div>
+              <p class="text-white text-sm ${p.ok ? '' : 'opacity-70'}">${p.nome}</p>
+              <p class="text-jd-green-dim text-xs">${p.dose}</p>
+            </div>
+          </div>`).join('');
+      }
+
+      const chart = document.getElementById('jd-chart');
+      if (chart) {
+        chart.innerHTML = jd_chartData.map((v, i) => {
+          const isToday = i === 2;
+          const color = isToday ? '#C4BC00' : '#6F760A';
+          return `<div class="flex-1 rounded-t-md transition-all duration-500" style="height:${v}%;background:${color};opacity:${isToday ? 1 : 0.7}"></div>`;
+        }).join('');
+      }
+
+      jornada_diaria_renderDayChips();
+    }
+
+    function jornada_diaria_renderDayChips() {
+      const container = document.getElementById('jd-day-chips');
+      if (!container) return;
+      const baseDay = 21;
+      container.innerHTML = '';
+      for (let i = -1; i <= 1; i++) {
+        const day = baseDay + i + jornada_diaria_state.selectedDay;
+        const active = i === 0;
+        const btn = document.createElement('button');
+        btn.className = `jd-day-chip w-10 h-10 rounded-xl text-xs font-bold flex items-center justify-center transition-all duration-200 ${active ? 'jd-day-active' : 'text-jd-green-dim bg-jd-green-dark/20 hover:bg-jd-green-dark/40'}`;
+        btn.textContent = day;
+        btn.onclick = () => { jornada_diaria_state.selectedDay = 0; jornada_diaria_renderDayChips(); };
+        container.appendChild(btn);
+      }
+    }
+
+    function jornada_diaria_selectDay(dir) {
+      jornada_diaria_state.selectedDay += dir;
+      jornada_diaria_renderDayChips();
+    }
+
+    function jornada_diaria_checkHabit(id) {
+      const btn = document.querySelector(`.jd-habit-btn[data-id="${id}"]`);
+      if (!btn) return;
+      const badge = btn.querySelector('.jd-check-badge');
+      const isChecked = jornada_diaria_state.checkedHabits[id];
+      if (isChecked) {
+        delete jornada_diaria_state.checkedHabits[id];
+        btn.classList.remove('jd-habit-done');
+        if (badge) badge.classList.add('hidden');
+      } else {
+        jornada_diaria_state.checkedHabits[id] = true;
+        btn.classList.add('jd-habit-done');
+        if (badge) badge.classList.remove('hidden');
+      }
+    }
+
+    function jornada_diaria_toggleProtocolo() {
+      const panel = document.getElementById('jd-protocolo-expandido');
+      const chev = document.getElementById('jd-prot-chevron');
+      if (!panel || !chev) return;
+      jornada_diaria_state.expandedProtocolo = !jornada_diaria_state.expandedProtocolo;
+      panel.classList.toggle('hidden', !jornada_diaria_state.expandedProtocolo);
+      chev.style.transform = jornada_diaria_state.expandedProtocolo ? 'rotate(180deg)' : '';
+    }
+
+    function jornada_diaria_toggleSintomas() {
+      const panel = document.getElementById('jd-sintomas-expandido');
+      const chev = document.getElementById('jd-sint-chevron');
+      if (!panel || !chev) return;
+      jornada_diaria_state.expandedSintomas = !jornada_diaria_state.expandedSintomas;
+      panel.classList.toggle('hidden', !jornada_diaria_state.expandedSintomas);
+      chev.style.transform = jornada_diaria_state.expandedSintomas ? 'rotate(180deg)' : '';
+    }
+
+    let jd_sintomIdx = {};
+    function jornada_diaria_toggleSintoma(el) {
+      const label = el.querySelector('span:first-child')?.textContent || '';
+      const status = el.querySelector('.jd-sintom-status');
+      if (!status) return;
+      if (!jd_sintomIdx[label]) jd_sintomIdx[label] = 0;
+      jd_sintomIdx[label] = (jd_sintomIdx[label] + 1) % jd_sintomCycles.length;
+      const [text, color] = jd_sintomCycles[jd_sintomIdx[label]];
+      status.textContent = text;
+      status.style.color = color;
+    }
+
+    document.addEventListener('DOMContentLoaded', jornada_diaria_init);
+  </script>
+
+  <style>
+    .jbg { background: #1a1f0a; }
+    .jd-header { background: linear-gradient(160deg, #4F5504 0%, #3d4203 100%); }
+    .jd-card { background: #262b0f; border: 1px solid rgba(143,134,2,0.1); }
+    .jd-btn { background: #C4BC00; }
+    .jd-btn:hover { background: #b3ab00; }
+    .jd-back { transition: background 0.2s; }
+    .jd-back:hover { background: rgba(255,255,255,0.25); }
+    .jd-habit-btn { background: #2e3412; border: 1px solid transparent; }
+    .jd-habit-btn:hover { border-color: rgba(196,188,0,0.3); background: #353b16; }
+    .jd-habit-done { border-color: #C4BC00 !important; background: rgba(196,188,0,0.1) !important; }
+    .jd-check-badge { background: #C4BC00; color: #1a1f0a; }
+    .jd-day-chip { transition: all 0.2s; }
+    .jd-day-active { background: #C4BC00; color: #1a1f0a; }
+    .jd-day-btn { transition: background 0.15s; }
+    .jd-day-btn:hover { background: rgba(196,188,0,0.2) !important; }
+    .jd-green-bright { color: #C4BC00; }
+    .jd-green-dim { color: rgba(196,188,0,0.5); }
+    .jd-green-dark { color: #6F760A; }
+    .jd-circular-progress { position: relative; }
+    .jd-circ-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: #C4BC00; }
+    .jd-sintom-item { transition: background 0.2s; }
+    .jd-sintom-item:hover { background: rgba(111,118,10,0.3) !important; }
+  </style>
+</section>
+
     <!-- TELAS -->
     </main>
 
