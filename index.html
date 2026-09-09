@@ -1,1174 +1,132 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ávera Unicuidado — Jornada Completa</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script>
-tailwind.config = {
-  theme: {
-    extend: {
-      colors: {
-        avera: {
-          900: '#2A2D02',
-          800: '#3C4103',
-          700: '#4F5504',
-          600: '#6F760A',
-          500: '#8D8602',
-          400: '#C4BC00',
-          300: '#DDD86B',
-          200: '#EDEBB8',
-          100: '#F6F5E4',
-          50:  '#FBFBF2',
-          ambar: '#A67B01',
-          ambarClaro: '#D8B45A'
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ávera Unicuidado</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            marca: {
+              DEFAULT: '#6F760A',
+              dark: '#4F5504',
+              mid: '#8D8602',
+              light: '#C4BC00',
+              amber: '#A67B01',
+              50: '#F4F5EC',
+              100: '#E8EAD0',
+              200: '#D1D6A1',
+              300: '#B8C072',
+              700: '#4F5504',
+              800: '#3D4203',
+              900: '#2B2E02',
+            }
+          },
+          fontFamily: {
+            sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+          }
         }
-      },
-      fontFamily: {
-        display: ['Fraunces', 'Georgia', 'serif'],
-        sans: ['Manrope', 'system-ui', 'sans-serif']
-      },
-      boxShadow: {
-        suave: '0 4px 20px -6px rgba(79,85,4,0.18)',
-        cartao: '0 2px 12px -4px rgba(79,85,4,0.14)'
       }
     }
-  }
-}
-</script>
-<style>
-  html, body { max-width: 100%; overflow-x: hidden; }
-  body {
-    background: #EAE9D9;
-    font-family: 'Manrope', sans-serif;
-  }
-  #aparelho {
-    max-width: 430px;
-    margin: 0 auto;
-    min-height: 100vh;
-    background: #FBFBF2;
-    box-shadow: 0 0 60px -10px rgba(42,45,2,0.35);
-    position: relative;
-  }
-  main { padding-bottom: 92px; }
-  .nav-btn {
-    color: #8A8B78;
-    transition: color .18s ease, background .18s ease, transform .18s ease;
-  }
-  .nav-btn svg { transition: transform .18s ease; }
-  .nav-btn.ativo {
-    color: #4F5504;
-    background: #EDEBB8;
-    transform: translateY(-2px);
-  }
-  .nav-btn.ativo svg { transform: scale(1.08); }
-  .nav-btn.ativo span { font-weight: 700; }
-  .nav-btn.ativo::after {
-    content: '';
-    position: absolute;
-    top: -1px; left: 50%;
-    transform: translateX(-50%);
-    width: 22px; height: 3px;
-    border-radius: 999px;
-    background: #C4BC00;
-  }
-  ::-webkit-scrollbar { width: 0; height: 0; }
-  .scroll-x { overflow-x: auto; scrollbar-width: none; }
-</style>
+  </script>
+  <style>
+    * { -webkit-tap-highlight-color: transparent; }
+    html, body { overscroll-behavior: none; }
+    body { font-family: 'DM Sans', system-ui, sans-serif; }
+
+    .nav-item { position: relative; transition: color 0.2s ease; }
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: 50%;
+      transform: translateX(-50%) scaleX(0);
+      width: 32px;
+      height: 3px;
+      border-radius: 9999px;
+      background: #C4BC00;
+      transition: transform 0.25s ease;
+    }
+    .nav-item.ativo { color: #C4BC00; }
+    .nav-item.ativo::before { transform: translateX(-50%) scaleX(1); }
+    .nav-item:not(.ativo) { color: #6F760A; opacity: 0.5; }
+
+    .nav-item svg { transition: transform 0.2s ease; }
+    .nav-item.ativo svg { transform: translateY(-1px); }
+
+    ::-webkit-scrollbar { width: 0; height: 0; }
+  </style>
 </head>
-<body class="font-sans text-avera-900 antialiased">
+<body class="bg-neutral-100 flex items-center justify-center min-h-screen">
 
-<div id="aparelho">
+  <div id="app-frame" class="w-full max-w-[430px] h-screen max-h-[100dvh] bg-white sm:rounded-[2rem] sm:shadow-2xl sm:border sm:border-neutral-200 flex flex-col overflow-hidden relative">
 
-  <main>
-    <section data-tela="jornada-da-cliente" class="hidden">
-  <style>
-    .av-card{background:#fff;border-radius:1.25rem;box-shadow:0 2px 14px rgba(79,85,4,.08);border:1px solid #EFEEDC}
-    .av-chip{border-radius:999px;font-size:.7rem;font-weight:600;padding:.2rem .6rem;letter-spacing:.02em}
-    .av-item{display:flex;align-items:center;gap:.75rem;padding:.7rem .8rem;border-radius:1rem;border:1px solid #EFEEDC;background:#FDFDF6;width:100%;text-align:left;transition:.18s}
-    .av-item.feito{background:#F4F5E2;border-color:#C4BC00}
-    .av-box{width:1.55rem;height:1.55rem;border-radius:.6rem;border:2px solid #C4BC00;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;flex:none}
-    .av-item.feito .av-box{background:#6F760A;border-color:#6F760A}
-    .av-atalho{display:flex;flex-direction:column;gap:.35rem;padding:.85rem;border-radius:1.1rem;background:#fff;border:1px solid #EFEEDC;text-align:left}
-  </style>
-
-  <div class="px-4 pt-4 pb-28 space-y-4" style="background:#FBFBF2;font-family:'Outfit','Georgia',serif">
-
-    <div class="flex items-center gap-3">
-      <img src="https://i.pravatar.cc/120?img=32" alt="Foto de Renata Villaça" class="w-14 h-14 rounded-2xl object-cover ring-2" style="--tw-ring-color:#C4BC00">
-      <div class="min-w-0">
-        <p class="text-[.7rem] uppercase tracking-widest" style="color:#A67B01">Terça, 18 de março</p>
-        <h2 class="text-xl leading-tight font-semibold" style="color:#4F5504">Bom dia, Renata</h2>
-        <p class="text-xs text-neutral-500">Dia 23 da sua jornada Unicuidado</p>
-      </div>
-    </div>
-
-    <div class="rounded-3xl p-4 text-white" style="background:linear-gradient(135deg,#4F5504 0%,#6F760A 55%,#8D8602 100%)">
-      <div class="flex items-center justify-between">
-        <div>
-          <p class="text-[.68rem] uppercase tracking-widest opacity-80">Progresso da semana</p>
-          <p class="text-2xl font-semibold" id="jc-pct">72%</p>
-        </div>
-        <button onclick="mostrarTela('check-in-diario')" class="av-chip" style="background:#C4BC00;color:#4F5504">Check-in de hoje →</button>
-      </div>
-      <div class="mt-3 h-2 rounded-full bg-white/25 overflow-hidden">
-        <div id="jc-barra" class="h-full rounded-full transition-all duration-500" style="width:72%;background:#C4BC00"></div>
-      </div>
-      <div class="mt-3 flex justify-between text-[.65rem]">
-        <span class="opacity-70">S 91%</span><span class="opacity-70">T 84%</span><span class="opacity-70">Q 60%</span>
-        <span class="opacity-70">Q 77%</span><span class="opacity-70">S 68%</span><span class="opacity-70">S 55%</span>
-        <span class="font-bold" style="color:#F2EFA6">Hoje</span>
-      </div>
-    </div>
-
-    <div class="av-card p-4">
-      <div class="flex items-start justify-between mb-3">
-        <div>
-          <h3 class="font-semibold" style="color:#4F5504">Protocolo de hoje</h3>
-          <p class="text-xs text-neutral-500">Dra. Marcela Andrade · Nutrologia</p>
-        </div>
-        <span class="av-chip" id="jc-contador" style="background:#F4F5E2;color:#6F760A">2 de 5</span>
-      </div>
-
-      <div class="space-y-2" id="jc-lista">
-        <button class="av-item feito" onclick="jornada_da_cliente_toggle(this)">
-          <span class="av-box">✓</span>
-          <span class="flex-1">
-            <span class="block text-sm font-medium" style="color:#4F5504">Magnésio dimalato 300mg</span>
-            <span class="block text-[.7rem] text-neutral-500">Em jejum · 07h00</span>
-          </span>
-          <span class="text-lg">💊</span>
-        </button>
-        <button class="av-item feito" onclick="jornada_da_cliente_toggle(this)">
-          <span class="av-box">✓</span>
-          <span class="flex-1">
-            <span class="block text-sm font-medium" style="color:#4F5504">Caminhada leve 25 min</span>
-            <span class="block text-[.7rem] text-neutral-500">Manhã · antes das 10h</span>
-          </span>
-          <span class="text-lg">🚶‍♀️</span>
-        </button>
-        <button class="av-item" onclick="jornada_da_cliente_toggle(this)">
-          <span class="av-box">✓</span>
-          <span class="flex-1">
-            <span class="block text-sm font-medium" style="color:#4F5504">Ômega 3 · 2 cápsulas</span>
-            <span class="block text-[.7rem] text-neutral-500">Após o almoço · 13h00</span>
-          </span>
-          <span class="text-lg">🐟</span>
-        </button>
-        <button class="av-item" onclick="jornada_da_cliente_toggle(this)">
-          <span class="av-box">✓</span>
-          <span class="flex-1">
-            <span class="block text-sm font-medium" style="color:#4F5504">Jantar sem ultraprocessados</span>
-            <span class="block text-[.7rem] text-neutral-500">Até as 20h30</span>
-          </span>
-          <span class="text-lg">🥗</span>
-        </button>
-        <button class="av-item" onclick="jornada_da_cliente_toggle(this)">
-          <span class="av-box">✓</span>
-          <span class="flex-1">
-            <span class="block text-sm font-medium" style="color:#4F5504">Dormir até 23h · sem telas</span>
-            <span class="block text-[.7rem] text-neutral-500">Rotina do sono</span>
-          </span>
-          <span class="text-lg">🌙</span>
-        </button>
-      </div>
-      <p id="jc-aviso" class="hidden mt-3 text-xs font-medium rounded-xl px-3 py-2" style="background:#F4F5E2;color:#4F5504"></p>
-    </div>
-
-    <div class="av-card p-4">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="font-semibold" style="color:#4F5504">Água do dia</h3>
-        <span class="text-sm font-semibold" style="color:#A67B01"><span id="jc-agua">1,2</span> L / 2,4 L</span>
-      </div>
-      <div class="flex gap-1.5" id="jc-copos"></div>
-      <div class="flex gap-2 mt-3">
-        <button onclick="jornada_da_cliente_agua(1)" class="flex-1 rounded-xl py-2 text-sm font-semibold text-white" style="background:#6F760A">+ 200 ml</button>
-        <button onclick="jornada_da_cliente_agua(-1)" class="rounded-xl py-2 px-4 text-sm font-semibold" style="background:#F4F5E2;color:#6F760A">−</button>
-      </div>
-    </div>
-
-    <div class="av-card p-4">
-      <p class="text-[.68rem] uppercase tracking-widest mb-2" style="color:#A67B01">Próximo atendimento</p>
-      <div class="flex gap-3">
-        <div class="rounded-2xl px-3 py-2 text-center text-white flex-none" style="background:#4F5504">
-          <p class="text-lg font-bold leading-none">21</p>
-          <p class="text-[.6rem] uppercase tracking-wider">mar</p>
-        </div>
-        <div class="flex-1 min-w-0">
-          <p class="text-sm font-semibold" style="color:#4F5504">Retorno · Avaliação metabólica</p>
-          <p class="text-xs text-neutral-500">Sexta, 15h30 · Dra. Marcela Andrade</p>
-          <p class="text-xs text-neutral-500">Unidade Batel · R. Bispo Dom José, 2158 — Curitiba</p>
-        </div>
-      </div>
-      <div id="jc-mapa" class="mt-3 rounded-xl h-20 relative overflow-hidden" style="background:#EFEEDC">
-        <div class="absolute inset-0 opacity-60" style="background:repeating-linear-gradient(45deg,#E4E3C6 0 12px,#EFEEDC 12px 24px)"></div>
-        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-          <span class="text-xl">📍</span>
-          <p class="text-[.65rem] font-semibold" style="color:#4F5504">Ávera Batel · 3,4 km</p>
-        </div>
-      </div>
-      <div class="flex gap-2 mt-3">
-        <button onclick="jornada_da_cliente_confirmar(this)" class="flex-1 rounded-xl py-2.5 text-sm font-semibold text-white" style="background:#8D8602">Confirmar presença</button>
-        <button onclick="mostrarTela('chat-e-suporte')" class="rounded-xl py-2.5 px-4 text-sm font-semibold" style="background:#F4F5E2;color:#6F760A">Remarcar</button>
-      </div>
-      <p id="jc-conf" class="hidden mt-2 text-xs font-medium" style="color:#4F5504">✓ Presença confirmada — a clínica foi avisada no WhatsApp.</p>
-    </div>
-
-    <div>
-      <p class="text-[.68rem] uppercase tracking-widest mb-2 px-1" style="color:#A67B01">Atalhos</p>
-      <div class="grid grid-cols-2 gap-3">
-        <button class="av-atalho" onclick="mostrarTela('pre-anamnese')">
-          <span class="text-xl">📝</span>
-          <span class="text-sm font-semibold" style="color:#4F5504">Pré-anamnese</span>
-          <span class="text-[.7rem] text-neutral-500">Pendente para 21/03</span>
-          <span class="av-chip self-start" style="background:#FBEFD2;color:#A67B01">1 pendência</span>
-        </button>
-        <button class="av-atalho" onclick="mostrarTela('chat-e-suporte')">
-          <span class="text-xl">💬</span>
-          <span class="text-sm font-semibold" style="color:#4F5504">Chat com a equipe</span>
-          <span class="text-[.7rem] text-neutral-500">Bruna respondeu às 09h12</span>
-          <span class="av-chip self-start" style="background:#F4F5E2;color:#6F760A">2 novas</span>
-        </button>
-        <button class="av-atalho" onclick="mostrarTela('ficha-da-cliente')">
-          <span class="text-xl">📁</span>
-          <span class="text-sm font-semibold" style="color:#4F5504">Documentos</span>
-          <span class="text-[.7rem] text-neutral-500">Exames, laudos e termos</span>
-        </button>
-        <button class="av-atalho" onclick="mostrarTela('check-in-diario')">
-          <span class="text-xl">🌤️</span>
-          <span class="text-sm font-semibold" style="color:#4F5504">Check-in diário</span>
-          <span class="text-[.7rem] text-neutral-500">Sono, energia e humor</span>
-        </button>
-      </div>
-    </div>
-
-    <button onclick="mostrarTela('painel-profissional')" class="w-full rounded-2xl py-3 text-sm font-semibold border" style="border-color:#C4BC00;color:#6F760A;background:#FDFDF6">
-      Entrar como profissional Ávera
-    </button>
-  </div>
-
-  <script>
-    function jornada_da_cliente_toggle(el){
-      el.classList.toggle('feito');
-      jornada_da_cliente_recalc();
-    }
-    function jornada_da_cliente_recalc(){
-      var itens=document.querySelectorAll('#jc-lista .av-item');
-      var f=document.querySelectorAll('#jc-lista .av-item.feito').length;
-      document.getElementById('jc-contador').textContent=f+' de '+itens.length;
-      var pct=Math.round((f/itens.length)*70)+Math.round(jcAgua/12*30);
-      document.getElementById('jc-barra').style.width=pct+'%';
-      document.getElementById('jc-pct').textContent=pct+'%';
-      var av=document.getElementById('jc-aviso');
-      if(f===itens.length){av.textContent='Protocolo do dia concluído! Dra. Marcela recebeu sua atualização.';av.classList.remove('hidden');}
-      else{av.classList.add('hidden');}
-    }
-    var jcAgua=6;
-    function jornada_da_cliente_copos(){
-      var h='';
-      for(var i=0;i<12;i++){
-        h+='<button onclick="jornada_da_cliente_setAgua('+(i+1)+')" class="flex-1 h-7 rounded-md" style="background:'+(i<jcAgua?'#8D8602':'#EFEEDC')+'"></button>';
-      }
-      document.getElementById('jc-copos').innerHTML=h;
-      document.getElementById('jc-agua').textContent=(jcAgua*0.2).toFixed(1).replace('.',',');
-      jornada_da_cliente_recalc();
-    }
-    function jornada_da_cliente_setAgua(n){jcAgua=n;jornada_da_cliente_copos();}
-    function jornada_da_cliente_agua(d){jcAgua=Math.max(0,Math.min(12,jcAgua+d));jornada_da_cliente_copos();}
-    function jornada_da_cliente_confirmar(btn){
-      btn.textContent='Presença confirmada ✓';
-      btn.style.background='#4F5504';
-      document.getElementById('jc-conf').classList.remove('hidden');
-    }
-    jornada_da_cliente_copos();
-  </script>
-</section>
-
-    <section data-tela="check-in-diario" class="hidden">
-  <style>
-    .cid-card{background:#fff;border:1px solid #ece9d3;border-radius:1rem;padding:1rem}
-    .cid-lbl{font-size:.8rem;font-weight:600;color:#4F5504;letter-spacing:.02em}
-    .cid-op{flex:1;padding:.55rem 0;border-radius:.7rem;border:1px solid #e5e2c8;background:#fbfaf3;font-size:1.05rem;transition:.15s}
-    .cid-op.sel{background:#4F5504;border-color:#4F5504;transform:translateY(-2px)}
-    .cid-chip{padding:.35rem .7rem;border-radius:999px;border:1px solid #d9d5b0;font-size:.72rem;color:#6F760A;background:#fbfaf3}
-    .cid-chip.on{background:#C4BC00;border-color:#C4BC00;color:#3d4103;font-weight:600}
-  </style>
-
-  <div class="px-4 pt-4 pb-28" style="background:#faf9f2">
-
-    <div class="rounded-2xl p-4 mb-4" style="background:linear-gradient(135deg,#4F5504,#8D8602)">
-      <p class="text-[11px] uppercase tracking-widest" style="color:#e4e2b8">Terça, 18 de março</p>
-      <h2 class="text-white text-xl font-semibold mt-1">Bom dia, Marina</h2>
-      <p class="text-[13px] mt-1" style="color:#eceabb">Dia 12 do protocolo · Reequilíbrio Hormonal</p>
-      <div class="mt-3 flex items-center gap-2">
-        <div class="flex-1 h-2 rounded-full" style="background:#ffffff33">
-          <div class="h-2 rounded-full" style="width:60%;background:#C4BC00"></div>
-        </div>
-        <span class="text-[11px] text-white font-medium">9 de 15 check-ins</span>
-      </div>
-    </div>
-
-    <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
-      <button onclick="mostrarTela('jornada-da-cliente')" class="cid-chip whitespace-nowrap">← Jornada</button>
-      <button onclick="mostrarTela('pre-anamnese')" class="cid-chip whitespace-nowrap">Pré-anamnese</button>
-      <button onclick="mostrarTela('chat-e-suporte')" class="cid-chip whitespace-nowrap">Falar com a Dra. Helena</button>
-    </div>
-
-    <div class="cid-card mb-3">
-      <div class="flex justify-between items-baseline">
-        <span class="cid-lbl">😴 Como foi seu sono?</span>
-        <span id="cid-v-sono" class="text-[11px]" style="color:#A67B01">—</span>
-      </div>
-      <div class="flex gap-1.5 mt-2" data-grupo="sono">
-        <button type="button" class="cid-op" data-v="1" data-t="Muito ruim">😫</button>
-        <button type="button" class="cid-op" data-v="2" data-t="Ruim">😕</button>
-        <button type="button" class="cid-op" data-v="3" data-t="Regular">😐</button>
-        <button type="button" class="cid-op" data-v="4" data-t="Bom">🙂</button>
-        <button type="button" class="cid-op" data-v="5" data-t="Ótimo">😄</button>
-      </div>
-      <div class="flex gap-1.5 mt-3 flex-wrap" id="cid-horas">
-        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'menos de 5h')">menos de 5h</button>
-        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'5h a 6h')">5h a 6h</button>
-        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'7h a 8h')">7h a 8h</button>
-        <button type="button" class="cid-chip" onclick="check_in_diario_horas(this,'mais de 8h')">mais de 8h</button>
-      </div>
-    </div>
-
-    <div class="cid-card mb-3">
-      <div class="flex justify-between items-baseline">
-        <span class="cid-lbl">⚡ Nível de energia</span>
-        <span id="cid-v-energia" class="text-[11px]" style="color:#A67B01">—</span>
-      </div>
-      <div class="flex gap-1.5 mt-2" data-grupo="energia">
-        <button type="button" class="cid-op" data-v="1" data-t="Exausta">🪫</button>
-        <button type="button" class="cid-op" data-v="2" data-t="Baixa">😪</button>
-        <button type="button" class="cid-op" data-v="3" data-t="Média">🙂</button>
-        <button type="button" class="cid-op" data-v="4" data-t="Boa">💪</button>
-        <button type="button" class="cid-op" data-v="5" data-t="Muito boa">🔋</button>
-      </div>
-    </div>
-
-    <div class="cid-card mb-3">
-      <div class="flex justify-between items-baseline">
-        <span class="cid-lbl">🌿 Intestino hoje</span>
-        <span id="cid-v-intestino" class="text-[11px]" style="color:#A67B01">—</span>
-      </div>
-      <div class="flex gap-1.5 mt-2" data-grupo="intestino">
-        <button type="button" class="cid-op" data-v="1" data-t="Preso">🚫</button>
-        <button type="button" class="cid-op" data-v="2" data-t="Difícil">😖</button>
-        <button type="button" class="cid-op" data-v="3" data-t="Normal">✅</button>
-        <button type="button" class="cid-op" data-v="4" data-t="Solto">💧</button>
-        <button type="button" class="cid-op" data-v="5" data-t="Diarreia">⚠️</button>
-      </div>
-    </div>
-
-    <div class="cid-card mb-3">
-      <div class="flex justify-between items-baseline">
-        <span class="cid-lbl">💛 Humor</span>
-        <span id="cid-v-humor" class="text-[11px]" style="color:#A67B01">—</span>
-      </div>
-      <div class="flex gap-1.5 mt-2" data-grupo="humor">
-        <button type="button" class="cid-op" data-v="1" data-t="Triste">😢</button>
-        <button type="button" class="cid-op" data-v="2" data-t="Irritada">😠</button>
-        <button type="button" class="cid-op" data-v="3" data-t="Neutra">😐</button>
-        <button type="button" class="cid-op" data-v="4" data-t="Tranquila">😌</button>
-        <button type="button" class="cid-op" data-v="5" data-t="Feliz">🤩</button>
-      </div>
-    </div>
-
-    <div class="cid-card mb-3">
-      <div class="flex justify-between items-baseline">
-        <span class="cid-lbl">🌀 Estresse</span>
-        <span id="cid-v-estresse" class="text-[11px]" style="color:#A67B01">—</span>
-      </div>
-      <div class="flex gap-1.5 mt-2" data-grupo="estresse">
-        <button type="button" class="cid-op" data-v="1" data-t="Nenhum">🧘</button>
-        <button type="button" class="cid-op" data-v="2" data-t="Leve">🙂</button>
-        <button type="button" class="cid-op" data-v="3" data-t="Moderado">😬</button>
-        <button type="button" class="cid-op" data-v="4" data-t="Alto">😰</button>
-        <button type="button" class="cid-op" data-v="5" data-t="No limite">🥵</button>
-      </div>
-    </div>
-
-    <div class="cid-card mb-3">
-      <span class="cid-lbl">💊 Segui o protocolo de hoje</span>
-      <div class="mt-2 space-y-2" id="cid-protocolo">
-        <label class="flex items-center gap-3 text-[13px] text-stone-700">
-          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> Magnésio dimalato · 1 cáp. após o almoço
-        </label>
-        <label class="flex items-center gap-3 text-[13px] text-stone-700">
-          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> Chá de camomila 30 min antes de dormir
-        </label>
-        <label class="flex items-center gap-3 text-[13px] text-stone-700">
-          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> Caminhada leve de 25 minutos
-        </label>
-        <label class="flex items-center gap-3 text-[13px] text-stone-700">
-          <input type="checkbox" onchange="check_in_diario_conta()" class="w-4 h-4 accent-[#6F760A]"> 2 litros de água ao longo do dia
-        </label>
-      </div>
-      <p class="text-[11px] mt-2" style="color:#A67B01"><span id="cid-prot-n">0</span> de 4 itens marcados</p>
-    </div>
-
-    <div class="cid-card mb-3">
-      <span class="cid-lbl">📝 Observações do dia</span>
-      <textarea id="cid-obs" rows="3" oninput="check_in_diario_obs()" placeholder="Ex.: acordei com dor de cabeça, melhorou depois do almoço..." class="w-full mt-2 text-[13px] p-3 rounded-xl border outline-none" style="border-color:#e5e2c8;background:#fbfaf3"></textarea>
-      <p class="text-[11px] text-right" style="color:#8D8602"><span id="cid-obs-n">0</span>/300</p>
-    </div>
-
-    <div class="cid-card mb-4">
-      <span class="cid-lbl">📷 Anexar foto ou exame</span>
-      <div class="flex gap-2 mt-2">
-        <button type="button" onclick="check_in_diario_foto('Foto do prato · almoço')" class="flex-1 py-3 rounded-xl text-[12px] font-medium text-white" style="background:#6F760A">Foto da refeição</button>
-        <button type="button" onclick="check_in_diario_foto('Exame · Vitamina D')" class="flex-1 py-3 rounded-xl text-[12px] font-medium" style="background:#f3f1de;color:#4F5504">Documento</button>
-      </div>
-      <div id="cid-anexos" class="mt-3 space-y-2"></div>
-    </div>
-
-    <button type="button" onclick="check_in_diario_enviar()" class="w-full py-4 rounded-2xl text-white font-semibold shadow-lg" style="background:linear-gradient(120deg,#4F5504,#8D8602)">Enviar check-in de hoje</button>
-    <p class="text-center text-[11px] mt-2" style="color:#8D8602">A Dra. Helena Marques recebe uma notificação a cada envio.</p>
-
-    <div class="mt-6">
-      <p class="cid-lbl mb-2">Últimos check-ins</p>
-      <div class="space-y-2" id="cid-historico">
-        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full cid-card flex items-center justify-between text-left">
-          <div><p class="text-[13px] font-semibold text-stone-800">17 de março</p><p class="text-[11px] text-stone-500">Sono bom · Energia média · Humor tranquila</p></div>
-          <span class="text-lg">🙂</span>
-        </button>
-        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full cid-card flex items-center justify-between text-left">
-          <div><p class="text-[13px] font-semibold text-stone-800">16 de março</p><p class="text-[11px] text-stone-500">Sono ruim · Energia baixa · Estresse alto</p></div>
-          <span class="text-lg">😕</span>
-        </button>
-        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full cid-card flex items-center justify-between text-left">
-          <div><p class="text-[13px] font-semibold text-stone-800">15 de março</p><p class="text-[11px] text-stone-500">Sono ótimo · Energia boa · Intestino normal</p></div>
-          <span class="text-lg">😄</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <div id="cid-modal" class="hidden fixed inset-0 z-50 items-end justify-center" style="background:#2b2d0899">
-    <div class="w-full max-w-[430px] rounded-t-3xl bg-white p-6 pb-8">
-      <div class="w-12 h-1.5 rounded-full mx-auto mb-5" style="background:#e5e2c8"></div>
-      <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto text-3xl" style="background:#f0efd6">✅</div>
-      <h3 class="text-center text-lg font-semibold mt-3" style="color:#4F5504">Check-in enviado!</h3>
-      <p class="text-center text-[13px] text-stone-600 mt-1">Sua evolução foi atualizada no painel da Dra. Helena Marques.</p>
-      <div class="mt-4 rounded-xl p-3 text-[12px] leading-relaxed" style="background:#faf9f2;color:#4F5504" id="cid-resumo"></div>
-      <div class="mt-4 rounded-xl p-3 text-[12px]" style="background:#fdf6e3;color:#7a5c02">
-        <b>Leitura da IA Ávera:</b> <span id="cid-ia">—</span>
-      </div>
-      <button onclick="mostrarTela('jornada-da-cliente')" class="w-full mt-5 py-3.5 rounded-2xl text-white font-semibold" style="background:#4F5504">Ver minha jornada</button>
-      <button onclick="mostrarTela('chat-e-suporte')" class="w-full mt-2 py-3 rounded-2xl font-medium text-[13px]" style="background:#f3f1de;color:#4F5504">Enviar recado para a profissional</button>
-    </div>
-  </div>
-
-  <script>
-    var check_in_diario_dados = {sono:null,energia:null,intestino:null,humor:null,estresse:null,horas:null,anexos:[]};
-
-    document.querySelectorAll('[data-tela="check-in-diario"] [data-grupo]').forEach(function(g){
-      var nome = g.getAttribute('data-grupo');
-      g.querySelectorAll('.cid-op').forEach(function(b){
-        b.addEventListener('click', function(){
-          g.querySelectorAll('.cid-op').forEach(function(x){x.classList.remove('sel')});
-          b.classList.add('sel');
-          check_in_diario_dados[nome] = {v:parseInt(b.dataset.v), t:b.dataset.t};
-          document.getElementById('cid-v-'+nome).textContent = b.dataset.t;
-        });
-      });
-    });
-
-    function check_in_diario_horas(el, txt){
-      document.querySelectorAll('#cid-horas .cid-chip').forEach(function(c){c.classList.remove('on')});
-      el.classList.add('on');
-      check_in_diario_dados.horas = txt;
-      var s = document.getElementById('cid-v-sono');
-      s.textContent = (check_in_diario_dados.sono ? check_in_diario_dados.sono.t+' · ' : '') + txt;
-    }
-
-    function check_in_diario_conta(){
-      var m = document.querySelectorAll('#cid-protocolo input:checked').length;
-      document.getElementById('cid-prot-n').textContent = m;
-    }
-
-    function check_in_diario_obs(){
-      document.getElementById('cid-obs-n').textContent = document.getElementById('cid-obs').value.length;
-    }
-
-    function check_in_diario_foto(nome){
-      check_in_diario_dados.anexos.push(nome);
-      var box = document.getElementById('cid-anexos');
-      var d = document.createElement('div');
-      d.className = 'flex items-center justify-between rounded-xl px-3 py-2';
-      d.style.background = '#f7f6e9';
-      d.innerHTML = '<span class="text-[12px]" style="color:#4F5504">📎 '+nome+'</span>';
-      var b = document.createElement('button');
-      b.textContent = 'remover';
-      b.className = 'text-[11px]';
-      b.style.color = '#A67B01';
-      b.onclick = function(){
-        box.removeChild(d);
-        var i = check_in_diario_dados.anexos.indexOf(nome);
-        if(i>-1) check_in_diario_dados.anexos.splice(i,1);
-      };
-      d.appendChild(b);
-      box.appendChild(d);
-    }
-
-    function check_in_diario_enviar(){
-      var d = check_in_diario_dados;
-      var falta = ['sono','energia','intestino','humor','estresse'].filter(function(k){return !d[k]});
-      if(falta.length){
-        var alvo = document.querySelector('[data-tela="check-in-diario"] [data-grupo="'+falta[0]+'"]');
-        alvo.parentElement.style.borderColor = '#A67B01';
-        document.getElementById('cid-v-'+falta[0]).textContent = 'responda aqui';
-        alvo.scrollIntoView({behavior:'smooth', block:'center'});
-        return;
-      }
-      var prot = document.querySelectorAll('#cid-protocolo input:checked').length;
-      var obs = document.getElementById('cid-obs').value.trim();
-      var linhas = 'Sono: <b>'+d.sono.t+'</b>'+(d.horas?' ('+d.horas+')':'')+
-        '<br>Energia: <b>'+d.energia.t+'</b> · Intestino: <b>'+d.intestino.t+'</b>'+
-        '<br>Humor: <b>'+d.humor.t+'</b> · Estresse: <b>'+d.estresse.t+'</b>'+
-        '<br>Protocolo: <b>'+prot+'/4 itens</b>'+
-        (d.anexos.length?'<br>Anexos: <b>'+d.anexos.length+'</b> ('+d.anexos.join(', ')+')':'')+
-        (obs?'<br>Obs.: “'+obs.slice(0,120)+'”':'');
-      document.getElementById('cid-resumo').innerHTML = linhas;
-
-      var media = (d.sono.v + d.energia.v + d.humor.v + (6-d.estresse.v))/4;
-      var ia;
-      if(media >= 4) ia = 'Ótimo padrão nos últimos dias. Sono e energia em alta sustentam o protocolo — mantenha o magnésio no mesmo horário.';
-      else if(media >= 2.75) ia = 'Evolução estável. O estresse ainda puxa a energia para baixo; sugerida respiração guiada de 5 min antes de dormir.';
-      else ia = 'Sinal de atenção: queda combinada de sono e energia por 2 dias. Alerta enviado à Dra. Helena para avaliar antecipação do retorno.';
-      document.getElementById('cid-ia').textContent = ia;
-
-      var m = document.getElementById('cid-modal');
-      m.classList.remove('hidden');
-      m.classList.add('flex');
-
-      var hist = document.getElementById('cid-historico');
-      var b = document.createElement('button');
-      b.className = 'w-full cid-card flex items-center justify-between text-left';
-      b.setAttribute('onclick', "mostrarTela('jornada-da-cliente')");
-      b.innerHTML = '<div><p class="text-[13px] font-semibold" style="color:#4F5504">18 de março · hoje</p><p class="text-[11px] text-stone-500">Sono '+d.sono.t.toLowerCase()+' · Energia '+d.energia.t.toLowerCase()+' · Humor '+d.humor.t.toLowerCase()+'</p></div><span class="text-lg">🌱</span>';
-      hist.insertBefore(b, hist.firstChild);
-    }
-  </script>
-</section>
-
-    <section data-tela="pre-anamnese" class="hidden">
-  <style>
-    .pa-card{background:#fff;border:1px solid #ece9d4;border-radius:1rem}
-    .pa-chip{border:1px solid #ded9b8;border-radius:999px;padding:.45rem .8rem;font-size:.78rem;color:#4F5504;background:#fdfdf7;transition:.15s}
-    .pa-chip.on{background:#4F5504;border-color:#4F5504;color:#F7F5E6}
-    .pa-lbl{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:#8D8602;font-weight:600}
-    .pa-in{width:100%;border:1px solid #ded9b8;border-radius:.75rem;padding:.7rem .85rem;font-size:.9rem;background:#fdfdf7;color:#3d4103;outline:none}
-    .pa-in:focus{border-color:#C4BC00;background:#fff}
-    .pa-step{display:none}
-    .pa-step.ativo{display:block}
-  </style>
-
-  <div class="px-5 pt-5 pb-28">
-    <p class="pa-lbl">Ávera Unicuidado</p>
-    <h2 class="text-2xl font-semibold text-[#4F5504] leading-tight mt-1" style="font-family:Georgia,serif">Pré-anamnese</h2>
-    <p class="text-[13px] text-[#77713f] mt-1">Consulta com <span class="font-medium text-[#6F760A]">Dra. Marina Ferrari</span> — 14/06, 09:30</p>
-
-    <div class="mt-5">
-      <div class="flex items-center justify-between text-[11px] text-[#8D8602] font-semibold mb-2">
-        <span id="pa-etapa-nome">Etapa 1 de 6 · Motivo</span>
-        <span id="pa-pct">17%</span>
-      </div>
-      <div class="h-2 rounded-full bg-[#efecd6] overflow-hidden">
-        <div id="pa-bar" class="h-full rounded-full transition-all duration-300" style="width:17%;background:linear-gradient(90deg,#4F5504,#C4BC00)"></div>
-      </div>
-      <div class="flex gap-1.5 mt-3" id="pa-dots"></div>
-    </div>
-
-    <div class="pa-card p-4 mt-5">
-
-      <div class="pa-step ativo" data-passo="1">
-        <p class="pa-lbl">Motivo da consulta</p>
-        <p class="text-sm text-[#3d4103] mt-1 mb-3">O que te trouxe até a Ávera?</p>
-        <div class="flex flex-wrap gap-2" id="pa-motivos">
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Cansaço constante</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Ganho de peso</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Queda de cabelo</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">TPM intensa</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Ansiedade</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-motivos')">Intestino preso</button>
-        </div>
-        <p class="pa-lbl mt-4 block">Conte com suas palavras</p>
-        <textarea id="pa-relato" rows="3" class="pa-in mt-2" placeholder="Ex.: acordo cansada mesmo dormindo 8h e sinto muito inchaço à tarde."></textarea>
-      </div>
-
-      <div class="pa-step" data-passo="2">
-        <p class="pa-lbl">Sintomas e sono</p>
-        <p class="text-sm text-[#3d4103] mt-1 mb-3">Como você tem se sentido nos últimos 30 dias?</p>
-        <div class="space-y-4">
-          <div>
-            <div class="flex justify-between text-[13px] mb-1"><span class="text-[#4F5504] font-medium">Nível de energia</span><span id="pa-v-energia" class="text-[#A67B01] font-semibold">4/10</span></div>
-            <input type="range" min="1" max="10" value="4" class="w-full accent-[#6F760A]" oninput="pre_anamnese_range('pa-v-energia',this.value)">
-          </div>
-          <div>
-            <div class="flex justify-between text-[13px] mb-1"><span class="text-[#4F5504] font-medium">Qualidade do sono</span><span id="pa-v-sono" class="text-[#A67B01] font-semibold">5/10</span></div>
-            <input type="range" min="1" max="10" value="5" class="w-full accent-[#6F760A]" oninput="pre_anamnese_range('pa-v-sono',this.value)">
-          </div>
-          <div>
-            <div class="flex justify-between text-[13px] mb-1"><span class="text-[#4F5504] font-medium">Estresse no dia a dia</span><span id="pa-v-estresse" class="text-[#A67B01] font-semibold">7/10</span></div>
-            <input type="range" min="1" max="10" value="7" class="w-full accent-[#6F760A]" oninput="pre_anamnese_range('pa-v-estresse',this.value)">
-          </div>
-        </div>
-        <p class="pa-lbl mt-4 block">Horas de sono por noite</p>
-        <div class="flex flex-wrap gap-2 mt-2" id="pa-horas">
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-horas')">menos de 5h</button>
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_unico(this,'pa-horas')">5h a 6h</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-horas')">7h a 8h</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-horas')">mais de 8h</button>
-        </div>
-      </div>
-
-      <div class="pa-step" data-passo="3">
-        <p class="pa-lbl">Alimentação e intestino</p>
-        <p class="text-sm text-[#3d4103] mt-1 mb-3">Marque o que combina com sua rotina.</p>
-        <div class="flex flex-wrap gap-2" id="pa-alim">
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-alim')">Café da manhã salgado</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Pulo refeições</button>
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-alim')">Muito doce à noite</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Como fora todo dia</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Sem lactose</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-alim')">Vegetariana</button>
-        </div>
-        <p class="pa-lbl mt-4 block">Água por dia</p>
-        <select class="pa-in mt-2" id="pa-agua" onchange="pre_anamnese_resumo()">
-          <option>Menos de 1 litro</option>
-          <option selected>1 a 1,5 litro</option>
-          <option>2 litros</option>
-          <option>Mais de 2,5 litros</option>
-        </select>
-        <p class="pa-lbl mt-4 block">Funcionamento intestinal</p>
-        <div class="flex flex-wrap gap-2 mt-2" id="pa-intest">
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_unico(this,'pa-intest')">Todos os dias</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-intest')">Dia alternado</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-intest')">2x por semana</button>
-        </div>
-      </div>
-
-      <div class="pa-step" data-passo="4">
-        <p class="pa-lbl">Rotina e movimento</p>
-        <p class="text-sm text-[#3d4103] mt-1 mb-3">Como são seus dias?</p>
-        <label class="pa-lbl block">Ocupação</label>
-        <input id="pa-ocup" class="pa-in mt-2" value="Advogada — escritório em Moema" oninput="pre_anamnese_resumo()">
-        <p class="pa-lbl mt-4 block">Atividade física</p>
-        <div class="flex flex-wrap gap-2 mt-2" id="pa-ativ">
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-ativ')">Não pratico</button>
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_unico(this,'pa-ativ')">2x na semana</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-ativ')">4x na semana</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_unico(this,'pa-ativ')">Todos os dias</button>
-        </div>
-        <p class="pa-lbl mt-4 block">Emoções predominantes</p>
-        <div class="flex flex-wrap gap-2 mt-2" id="pa-emo">
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-emo')">🙃 Sobrecarga</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-emo')">😴 Desânimo</button>
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-emo')">😬 Irritação</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-emo')">🙂 Bem no geral</button>
-        </div>
-      </div>
-
-      <div class="pa-step" data-passo="5">
-        <p class="pa-lbl">Medicamentos e suplementos</p>
-        <p class="text-sm text-[#3d4103] mt-1 mb-3">Adicione o que você usa hoje.</p>
-        <div class="flex gap-2">
-          <input id="pa-med-nome" class="pa-in" placeholder="Ex.: Vitamina D 2.000UI">
-          <button type="button" onclick="pre_anamnese_addMed()" class="px-4 rounded-xl text-sm font-semibold text-[#F7F5E6]" style="background:#6F760A">+</button>
-        </div>
-        <ul id="pa-med-lista" class="mt-3 space-y-2"></ul>
-        <p class="text-[11px] text-[#8D8602] mt-3">Toque em um item para remover.</p>
-        <label class="flex items-start gap-2 mt-4 text-[13px] text-[#3d4103]">
-          <input type="checkbox" id="pa-exames" class="mt-0.5 accent-[#6F760A]" onchange="pre_anamnese_resumo()">
-          <span>Tenho exames recentes para anexar na consulta (últimos 6 meses)</span>
-        </label>
-      </div>
-
-      <div class="pa-step" data-passo="6">
-        <p class="pa-lbl">Seus objetivos</p>
-        <p class="text-sm text-[#3d4103] mt-1 mb-3">Escolha até três prioridades.</p>
-        <div class="flex flex-wrap gap-2" id="pa-obj">
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-obj')">Mais energia</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Dormir melhor</button>
-          <button type="button" class="pa-chip on" onclick="pre_anamnese_chip(this,'pa-obj')">Reduzir inchaço</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Emagrecer com saúde</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Equilíbrio hormonal</button>
-          <button type="button" class="pa-chip" onclick="pre_anamnese_chip(this,'pa-obj')">Pele e cabelo</button>
-        </div>
-        <div class="mt-4 rounded-xl p-3" style="background:#f7f6e8;border:1px solid #e6e2c2">
-          <p class="pa-lbl">Prévia do resumo por IA</p>
-          <p id="pa-resumo" class="text-[13px] text-[#4F5504] leading-relaxed mt-2"></p>
-        </div>
-        <label class="flex items-start gap-2 mt-4 text-[12px] text-[#3d4103]">
-          <input type="checkbox" id="pa-consent" class="mt-0.5 accent-[#6F760A]" checked>
-          <span>Autorizo o uso das respostas para preparo da consulta e geração de resumo pela IA da Ávera.</span>
-        </label>
-      </div>
-
-      <div class="pa-step" data-passo="7">
-        <div class="text-center py-4">
-          <div class="w-16 h-16 rounded-full mx-auto flex items-center justify-center text-3xl" style="background:#eff0d6">✓</div>
-          <h3 class="text-xl font-semibold text-[#4F5504] mt-3" style="font-family:Georgia,serif">Pré-anamnese enviada</h3>
-          <p class="text-[13px] text-[#77713f] mt-1">Enviado em 12/06 às 20:14 · protocolo #PA-2418</p>
-        </div>
-        <div class="rounded-xl p-3" style="background:#f7f6e8;border:1px solid #e6e2c2">
-          <p class="pa-lbl">Resumo pré-consulta gerado</p>
-          <p id="pa-resumo-final" class="text-[13px] text-[#4F5504] leading-relaxed mt-2"></p>
-          <p class="text-[11px] text-[#8D8602] mt-2">Aguardando revisão da Dra. Marina Ferrari.</p>
-        </div>
-        <div class="mt-4 space-y-2">
-          <button type="button" onclick="mostrarTela('jornada-da-cliente')" class="w-full py-3 rounded-xl text-sm font-semibold text-[#F7F5E6]" style="background:#4F5504">Ir para minha jornada</button>
-          <button type="button" onclick="mostrarTela('check-in-diario')" class="w-full py-3 rounded-xl text-sm font-semibold text-[#4F5504]" style="border:1px solid #C4BC00">Fazer check-in de hoje</button>
-          <button type="button" onclick="mostrarTela('chat-e-suporte')" class="w-full py-3 rounded-xl text-sm font-semibold text-[#6F760A]">Falar com a equipe Ávera</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pa-nav" class="flex gap-2 mt-4">
-      <button type="button" id="pa-voltar" onclick="pre_anamnese_voltar()" class="px-4 py-3 rounded-xl text-sm font-semibold text-[#6F760A]" style="border:1px solid #ded9b8">Voltar</button>
-      <button type="button" id="pa-avancar" onclick="pre_anamnese_avancar()" class="flex-1 py-3 rounded-xl text-sm font-semibold text-[#F7F5E6]" style="background:linear-gradient(90deg,#4F5504,#8D8602)">Continuar</button>
-    </div>
-    <button type="button" onclick="mostrarTela('jornada-da-cliente')" class="w-full mt-3 text-[12px] text-[#8D8602] font-medium">Responder depois</button>
-  </div>
-
-  <script>
-    var pre_anamnese_passo = 1;
-    var pre_anamnese_nomes = ['Motivo','Sintomas','Alimentação','Rotina','Medicamentos','Objetivos'];
-    var pre_anamnese_meds = ['Anticoncepcional Elani 28','Vitamina D 2.000UI'];
-
-    function pre_anamnese_dots(){
-      var h='';
-      for(var i=1;i<=6;i++){
-        var c = i<=pre_anamnese_passo ? '#6F760A' : '#e6e2c2';
-        h+='<button type="button" onclick="pre_anamnese_ir('+i+')" class="flex-1 h-1.5 rounded-full" style="background:'+c+'"></button>';
-      }
-      document.getElementById('pa-dots').innerHTML=h;
-    }
-    function pre_anamnese_render(){
-      document.querySelectorAll('[data-tela="pre-anamnese"] .pa-step').forEach(function(s){
-        s.classList.toggle('ativo', s.dataset.passo == pre_anamnese_passo);
-      });
-      var fim = pre_anamnese_passo === 7;
-      document.getElementById('pa-nav').style.display = fim ? 'none' : 'flex';
-      if(!fim){
-        var pct = Math.round(pre_anamnese_passo/6*100);
-        document.getElementById('pa-bar').style.width = pct+'%';
-        document.getElementById('pa-pct').textContent = pct+'%';
-        document.getElementById('pa-etapa-nome').textContent = 'Etapa '+pre_anamnese_passo+' de 6 · '+pre_anamnese_nomes[pre_anamnese_passo-1];
-        document.getElementById('pa-voltar').style.display = pre_anamnese_passo===1 ? 'none' : 'block';
-        document.getElementById('pa-avancar').textContent = pre_anamnese_passo===6 ? 'Enviar pré-anamnese' : 'Continuar';
-      } else {
-        document.getElementById('pa-bar').style.width='100%';
-        document.getElementById('pa-pct').textContent='100%';
-        document.getElementById('pa-etapa-nome').textContent='Concluído';
-      }
-      pre_anamnese_dots();
-      pre_anamnese_resumo();
-    }
-    function pre_anamnese_avancar(){
-      if(pre_anamnese_passo===6 && !document.getElementById('pa-consent').checked){
-        document.getElementById('pa-resumo').textContent='Para enviar, é necessário autorizar o uso das respostas.';
-        return;
-      }
-      if(pre_anamnese_passo<7){pre_anamnese_passo++;pre_anamnese_render();window.scrollTo(0,0);}
-    }
-    function pre_anamnese_voltar(){ if(pre_anamnese_passo>1){pre_anamnese_passo--;pre_anamnese_render();} }
-    function pre_anamnese_ir(n){ if(n<=6){pre_anamnese_passo=n;pre_anamnese_render();} }
-    function pre_anamnese_chip(b,g){
-      if(g==='pa-obj' && !b.classList.contains('on')){
-        var on=document.querySelectorAll('#pa-obj .pa-chip.on');
-        if(on.length>=3){on[0].classList.remove('on');}
-      }
-      b.classList.toggle('on'); pre_anamnese_resumo();
-    }
-    function pre_anamnese_unico(b,g){
-      document.querySelectorAll('#'+g+' .pa-chip').forEach(function(c){c.classList.remove('on');});
-      b.classList.add('on'); pre_anamnese_resumo();
-    }
-    function pre_anamnese_range(id,v){ document.getElementById(id).textContent=v+'/10'; pre_anamnese_resumo(); }
-    function pre_anamnese_addMed(){
-      var i=document.getElementById('pa-med-nome');
-      if(i.value.trim()===''){return;}
-      pre_anamnese_meds.push(i.value.trim()); i.value=''; pre_anamnese_meds_render();
-    }
-    function pre_anamnese_remMed(n){ pre_anamnese_meds.splice(n,1); pre_anamnese_meds_render(); }
-    function pre_anamnese_meds_render(){
-      var l=document.getElementById('pa-med-lista');
-      if(!pre_anamnese_meds.length){ l.innerHTML='<li class="text-[13px] text-[#8D8602]">Nenhum item informado.</li>'; }
-      else{
-        l.innerHTML = pre_anamnese_meds.map(function(m,i){
-          return '<li><button type="button" onclick="pre_anamnese_remMed('+i+')" class="w-full text-left text-[13px] text-[#3d4103] rounded-xl px-3 py-2 flex justify-between items-center" style="background:#f7f6e8;border:1px solid #e6e2c2"><span>💊 '+m+'</span><span class="text-[#A67B01]">✕</span></button></li>';
-        }).join('');
-      }
-      pre_anamnese_resumo();
-    }
-    function pre_anamnese_sel(g){
-      return Array.prototype.map.call(document.querySelectorAll('#'+g+' .pa-chip.on'),function(c){return c.textContent.trim();});
-    }
-    function pre_anamnese_resumo(){
-      var motivos=pre_anamnese_sel('pa-motivos'), objs=pre_anamnese_sel('pa-obj');
-      var horas=pre_anamnese_sel('pa-horas')[0]||'não informado';
-      var ativ=pre_anamnese_sel('pa-ativ')[0]||'não informado';
-      var intest=pre_anamnese_sel('pa-intest')[0]||'não informado';
-      var relato=document.getElementById('pa-relato').value.trim();
-      var t='Cliente Juliana Alencar, 34 anos. Queixa principal: '+(motivos.length?motivos.join(', ').toLowerCase():'a definir na consulta')+'. '
-        +(relato?'Relato: "'+relato+'". ':'')
-        +'Sono de '+horas+' com qualidade '+document.getElementById('pa-v-sono').textContent+' e energia '+document.getElementById('pa-v-energia').textContent+'; estresse '+document.getElementById('pa-v-estresse').textContent+'. '
-        +'Hidratação: '+document.getElementById('pa-agua').value.toLowerCase()+'; intestino '+intest.toLowerCase()+'. '
-        +'Atividade física '+ativ.toLowerCase()+' · ocupação: '+(document.getElementById('pa-ocup').value||'não informada')+'. '
-        +'Em uso: '+(pre_anamnese_meds.length?pre_anamnese_meds.join(' / '):'nenhum item')+'. '
-        +(document.getElementById('pa-exames').checked?'Traz exames dos últimos 6 meses. ':'')
-        +'Objetivos: '+(objs.length?objs.join(', ').toLowerCase():'a alinhar')+'.';
-      document.getElementById('pa-resumo').textContent=t;
-      document.getElementById('pa-resumo-final').textContent=t;
-    }
-    pre_anamnese_meds_render();
-    pre_anamnese_render();
-  </script>
-</section>
-
-    <section data-tela="painel-profissional" class="hidden">
-  <style>
-    .pp-card{background:#fff;border:1px solid #eceadb;border-radius:1rem;box-shadow:0 1px 2px rgba(79,85,4,.05)}
-    .pp-chip{font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
-    .pp-tab{flex:1;padding:8px 0;font-size:12px;font-weight:600;border-radius:.6rem;transition:.15s}
-    .pp-tab-on{background:#4F5504;color:#F7F5E6}
-    .pp-tab-off{color:#6F760A}
-    .pp-hora{font-variant-numeric:tabular-nums;font-weight:700;color:#4F5504}
-  </style>
-
-  <div class="px-4 pt-4 pb-28 bg-[#FBFAF3] min-h-screen">
-
-    <div class="flex items-start justify-between mb-4">
+    <!-- Header -->
+    <header class="shrink-0 bg-marca-dark px-5 pt-4 pb-3 flex items-center justify-between z-20">
       <div>
-        <p class="text-[11px] uppercase tracking-widest text-[#A67B01] font-semibold">Terça, 18 de março</p>
-        <h2 class="text-xl font-semibold text-[#4F5504] leading-tight">Olá, Dra. Marina Bezerra</h2>
-        <p class="text-xs text-[#6F760A] mt-0.5">Nutrologia • Unidade Aldeota</p>
+        <h1 class="text-white font-bold text-lg leading-tight tracking-tight">Ávera Unicuidado</h1>
+        <p class="text-marca-200 text-[11px] font-medium mt-0.5 tracking-wide uppercase">Painel Profissional</p>
       </div>
-      <button onclick="mostrarTela('chat-e-suporte')" class="relative w-11 h-11 rounded-xl bg-[#4F5504] text-[#F7F5E6] flex items-center justify-center text-lg">
-        💬
-        <span class="absolute -top-1 -right-1 bg-[#C4BC00] text-[#4F5504] text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">4</span>
-      </button>
-    </div>
-
-    <div class="grid grid-cols-3 gap-2 mb-4">
-      <div class="pp-card p-3">
-        <p class="text-[10px] uppercase text-[#A67B01] font-semibold tracking-wide">Hoje</p>
-        <p class="text-2xl font-bold text-[#4F5504] leading-none mt-1">7</p>
-        <p class="text-[11px] text-[#6F760A]">atendimentos</p>
-      </div>
-      <div class="pp-card p-3">
-        <p class="text-[10px] uppercase text-[#A67B01] font-semibold tracking-wide">Mês</p>
-        <p class="text-2xl font-bold text-[#4F5504] leading-none mt-1">128</p>
-        <p class="text-[11px] text-[#6F760A]">consultas</p>
-      </div>
-      <div class="pp-card p-3">
-        <p class="text-[10px] uppercase text-[#A67B01] font-semibold tracking-wide">Faturado</p>
-        <p class="text-lg font-bold text-[#4F5504] leading-none mt-1.5">R$ 61,4k</p>
-        <p class="text-[11px] text-[#8D8602] font-semibold">▲ 12% vs. fev</p>
-      </div>
-    </div>
-
-    <div class="pp-card p-3 mb-4">
-      <div class="flex items-center justify-between mb-2">
-        <p class="text-xs font-semibold text-[#4F5504]">Meta de faturamento — março</p>
-        <span class="text-[11px] font-bold text-[#A67B01]">82%</span>
-      </div>
-      <div class="h-2.5 rounded-full bg-[#EFEDDC] overflow-hidden">
-        <div class="h-full rounded-full" style="width:82%;background:linear-gradient(90deg,#6F760A,#C4BC00)"></div>
-      </div>
-      <p class="text-[11px] text-[#6F760A] mt-2">R$ 61.400 de R$ 75.000 • faltam 9 consultas</p>
-    </div>
-
-    <div class="flex gap-1.5 p-1 rounded-xl bg-[#EFEDDC] mb-3">
-      <button id="pp-tab-agenda" onclick="painel_profissional_aba('agenda')" class="pp-tab pp-tab-on">Agenda do dia</button>
-      <button id="pp-tab-pendencias" onclick="painel_profissional_aba('pendencias')" class="pp-tab pp-tab-off">Pendências</button>
-      <button id="pp-tab-retornos" onclick="painel_profissional_aba('retornos')" class="pp-tab pp-tab-off">Retornos</button>
-    </div>
-
-    <div id="pp-painel-agenda">
-      <div class="space-y-2">
-        <div onclick="painel_profissional_abrir('Luciana Amorim Sales')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
-          <div class="text-center w-12">
-            <p class="pp-hora text-sm">08:30</p>
-            <p class="text-[10px] text-[#A67B01]">50 min</p>
-          </div>
-          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-[#3D4103] truncate">Luciana Amorim Sales</p>
-            <p class="text-[11px] text-[#6F760A]">Retorno • Protocolo Equilíbrio Hormonal</p>
-          </div>
-          <span class="pp-chip bg-[#DDF0C9] text-[#4F5504]">Concluída</span>
-        </div>
-
-        <div onclick="painel_profissional_abrir('Renata Coelho Vasconcelos')" class="pp-card p-3 flex items-center gap-3 border-l-4 border-l-[#C4BC00] active:bg-[#F5F3E2] cursor-pointer">
-          <div class="text-center w-12">
-            <p class="pp-hora text-sm">10:00</p>
-            <p class="text-[10px] text-[#A67B01]">60 min</p>
-          </div>
-          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-[#3D4103] truncate">Renata Coelho Vasconcelos</p>
-            <p class="text-[11px] text-[#6F760A]">1ª consulta • pré-anamnese enviada</p>
-          </div>
-          <span class="pp-chip bg-[#C4BC00] text-[#4F5504]">Agora</span>
-        </div>
-
-        <div onclick="painel_profissional_abrir('Beatriz Nogueira Lima')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
-          <div class="text-center w-12">
-            <p class="pp-hora text-sm">11:30</p>
-            <p class="text-[10px] text-[#A67B01]">40 min</p>
-          </div>
-          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-[#3D4103] truncate">Beatriz Nogueira Lima</p>
-            <p class="text-[11px] text-[#6F760A]">Avaliação de exames • Teleconsulta</p>
-          </div>
-          <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">Online</span>
-        </div>
-
-        <div onclick="painel_profissional_abrir('Sônia Maria Peixoto')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
-          <div class="text-center w-12">
-            <p class="pp-hora text-sm">14:00</p>
-            <p class="text-[10px] text-[#A67B01]">50 min</p>
-          </div>
-          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-[#3D4103] truncate">Sônia Maria Peixoto</p>
-            <p class="text-[11px] text-[#6F760A]">Retorno 90 dias • Menopausa</p>
-          </div>
-          <span class="pp-chip bg-[#F6E7C4] text-[#A67B01]">Pgto. pend.</span>
-        </div>
-
-        <div onclick="painel_profissional_abrir('Ana Cláudia Ferreira')" class="pp-card p-3 flex items-center gap-3 active:bg-[#F5F3E2] cursor-pointer">
-          <div class="text-center w-12">
-            <p class="pp-hora text-sm">15:30</p>
-            <p class="text-[10px] text-[#A67B01]">60 min</p>
-          </div>
-          <div class="w-px self-stretch bg-[#C4BC00]/40"></div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-[#3D4103] truncate">Ana Cláudia Ferreira</p>
-            <p class="text-[11px] text-[#6F760A]">1ª consulta • indicação Dra. Helena</p>
-          </div>
-          <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">Aldeota</span>
-        </div>
-      </div>
-    </div>
-
-    <div id="pp-painel-pendencias" class="hidden space-y-2">
-      <div class="pp-card p-3 flex items-start gap-3">
-        <span class="text-lg">📝</span>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-[#3D4103]">Evolução não finalizada</p>
-          <p class="text-[11px] text-[#6F760A]">Luciana Amorim Sales • consulta de hoje 08:30</p>
-          <button onclick="mostrarTela('ficha-da-cliente')" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#EFEDDC] px-3 py-1.5 rounded-lg">Abrir prontuário</button>
-        </div>
-      </div>
-      <div class="pp-card p-3 flex items-start gap-3">
-        <span class="text-lg">📄</span>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-[#3D4103]">Pré-anamnese não respondida</p>
-          <p class="text-[11px] text-[#6F760A]">Ana Cláudia Ferreira • consulta às 15:30</p>
-          <button onclick="painel_profissional_lembrete(this)" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#C4BC00] px-3 py-1.5 rounded-lg">Reenviar por WhatsApp</button>
-        </div>
-      </div>
-      <div class="pp-card p-3 flex items-start gap-3">
-        <span class="text-lg">🧾</span>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-[#3D4103]">Termo de consentimento pendente</p>
-          <p class="text-[11px] text-[#6F760A]">Sônia Maria Peixoto • gravação de consulta</p>
-          <button onclick="mostrarTela('ficha-da-cliente')" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#EFEDDC] px-3 py-1.5 rounded-lg">Ver documentos</button>
-        </div>
-      </div>
-      <div class="pp-card p-3 flex items-start gap-3">
-        <span class="text-lg">💳</span>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-[#3D4103]">Parcela 2/3 em aberto — R$ 480,00</p>
-          <p class="text-[11px] text-[#6F760A]">Sônia Maria Peixoto • venceu em 14/03</p>
-          <button onclick="painel_profissional_lembrete(this)" class="mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#C4BC00] px-3 py-1.5 rounded-lg">Enviar cobrança</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pp-painel-retornos" class="hidden space-y-2">
-      <div onclick="painel_profissional_abrir('Patrícia Uchôa Melo')" class="pp-card p-3 flex items-center gap-3 cursor-pointer active:bg-[#F5F3E2]">
-        <div class="w-9 h-9 rounded-full bg-[#6F760A] text-[#F7F5E6] flex items-center justify-center text-xs font-bold">PU</div>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-[#3D4103]">Patrícia Uchôa Melo</p>
-          <p class="text-[11px] text-[#6F760A]">Retorno vencido há 21 dias • último: 25/02</p>
-        </div>
-        <span class="pp-chip bg-[#F6DCC4] text-[#A67B01]">Atrasado</span>
-      </div>
-      <div onclick="painel_profissional_abrir('Karine Duarte Rocha')" class="pp-card p-3 flex items-center gap-3 cursor-pointer active:bg-[#F5F3E2]">
-        <div class="w-9 h-9 rounded-full bg-[#8D8602] text-[#F7F5E6] flex items-center justify-center text-xs font-bold">KD</div>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-[#3D4103]">Karine Duarte Rocha</p>
-          <p class="text-[11px] text-[#6F760A]">Agendar retorno de 30 dias • até 22/03</p>
-        </div>
-        <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">Esta semana</span>
-      </div>
-      <div onclick="painel_profissional_abrir('Juliana Barros Tavares')" class="pp-card p-3 flex items-center gap-3 cursor-pointer active:bg-[#F5F3E2]">
-        <div class="w-9 h-9 rounded-full bg-[#A67B01] text-[#F7F5E6] flex items-center justify-center text-xs font-bold">JB</div>
-        <div class="flex-1">
-          <p class="text-sm font-semibold text-[#3D4103]">Juliana Barros Tavares</p>
-          <p class="text-[11px] text-[#6F760A]">Fim do protocolo em 02/04 • renovar plano</p>
-        </div>
-        <span class="pp-chip bg-[#EFEDDC] text-[#6F760A]">15 dias</span>
-      </div>
-    </div>
-
-    <h3 class="text-sm font-semibold text-[#4F5504] mt-6 mb-2 flex items-center gap-2">
-      <span class="w-1.5 h-1.5 rounded-full bg-[#A67B01]"></span> Alertas clínicos
-    </h3>
-    <div class="space-y-2">
-      <div class="rounded-2xl p-3 bg-[#FDF3E2] border border-[#E8CE93]">
-        <p class="text-[11px] font-bold text-[#A67B01] uppercase tracking-wide">Interação medicamentosa</p>
-        <p class="text-sm text-[#4F5504] mt-1 leading-snug">Sônia M. Peixoto — Levotiroxina + Cálcio quelato no mesmo horário. Sugerir intervalo de 4h.</p>
-        <button onclick="mostrarTela('ficha-da-cliente')" class="mt-2 text-[11px] font-semibold text-[#A67B01] underline">Ver prescrição</button>
-      </div>
-      <div class="rounded-2xl p-3 bg-[#F4F5E0] border border-[#D5D68A]">
-        <p class="text-[11px] font-bold text-[#6F760A] uppercase tracking-wide">Risco de depleção</p>
-        <p class="text-sm text-[#4F5504] mt-1 leading-snug">Renata C. Vasconcelos — uso contínuo de omeprazol há 14 meses: avaliar B12 e magnésio.</p>
-        <button onclick="mostrarTela('pre-anamnese')" class="mt-2 text-[11px] font-semibold text-[#6F760A] underline">Abrir pré-anamnese</button>
-      </div>
-    </div>
-
-    <div class="mt-4 rounded-2xl p-4" style="background:linear-gradient(135deg,#4F5504,#6F760A)">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="text-base">✦</span>
-        <p class="text-[11px] font-bold text-[#C4BC00] uppercase tracking-widest">Notificações da IA Ávera</p>
-      </div>
-      <div class="space-y-2">
-        <button onclick="mostrarTela('jornada-da-cliente')" class="w-full text-left bg-white/10 rounded-xl p-3">
-          <p class="text-sm text-[#F7F5E6] leading-snug">Beatriz N. Lima registrou queda de energia por 5 dias seguidos no check-in. Sugestão: revisar sono e ferritina.</p>
-          <p class="text-[11px] text-[#C4BC00] mt-1 font-semibold">Ver jornada da cliente →</p>
-        </button>
-        <button onclick="mostrarTela('ficha-da-cliente')" class="w-full text-left bg-white/10 rounded-xl p-3">
-          <p class="text-sm text-[#F7F5E6] leading-snug">Resumo pré-consulta de Renata C. Vasconcelos pronto para revisão (10:00).</p>
-          <p class="text-[11px] text-[#C4BC00] mt-1 font-semibold">Revisar resumo →</p>
-        </button>
-      </div>
-    </div>
-
-    <button onclick="mostrarTela('ficha-da-cliente')" class="mt-4 w-full py-3.5 rounded-2xl bg-[#4F5504] text-[#F7F5E6] font-semibold text-sm">Iniciar atendimento das 10:00</button>
-    <p id="pp-toast" class="hidden mt-3 text-center text-[12px] font-semibold text-[#4F5504] bg-[#DDF0C9] py-2.5 rounded-xl"></p>
-  </div>
-
-  <div id="pp-modal" class="hidden fixed inset-0 z-50 bg-[#2A2C02]/50 flex items-end justify-center">
-    <div class="w-full max-w-[430px] bg-[#FBFAF3] rounded-t-3xl p-5">
-      <div class="w-10 h-1 bg-[#D8D6BE] rounded-full mx-auto mb-4"></div>
       <div class="flex items-center gap-3">
-        <div id="pp-modal-ini" class="w-12 h-12 rounded-full bg-[#6F760A] text-[#F7F5E6] flex items-center justify-center font-bold"></div>
-        <div>
-          <p id="pp-modal-nome" class="font-semibold text-[#3D4103]"></p>
-          <p class="text-[11px] text-[#6F760A]">Cliente ativa • Protocolo em andamento</p>
-        </div>
+        <button class="relative p-1.5 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors" aria-label="Notificações">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-marca-light text-marca-dark text-[10px] font-bold rounded-full flex items-center justify-center">3</span>
+        </button>
+        <div class="w-8 h-8 rounded-full bg-marca-light flex items-center justify-center text-marca-dark font-bold text-sm">DR</div>
       </div>
-      <div class="grid grid-cols-2 gap-2 mt-4">
-        <button onclick="painel_profissional_fechar();mostrarTela('ficha-da-cliente')" class="py-3 rounded-xl bg-[#4F5504] text-[#F7F5E6] text-xs font-semibold">Abrir ficha</button>
-        <button onclick="painel_profissional_fechar();mostrarTela('jornada-da-cliente')" class="py-3 rounded-xl bg-[#C4BC00] text-[#4F5504] text-xs font-semibold">Jornada diária</button>
-        <button onclick="painel_profissional_fechar();mostrarTela('pre-anamnese')" class="py-3 rounded-xl bg-[#EFEDDC] text-[#4F5504] text-xs font-semibold">Pré-anamnese</button>
-        <button onclick="painel_profissional_fechar();mostrarTela('chat-e-suporte')" class="py-3 rounded-xl bg-[#EFEDDC] text-[#4F5504] text-xs font-semibold">Mensagem</button>
+    </header>
+
+    <!-- Área de conteúdo das telas -->
+    <main class="flex-1 overflow-y-auto bg-neutral-50 relative">
+      <!-- TELAS -->
+    </main>
+
+    <!-- Navegação inferior -->
+    <nav class="shrink-0 bg-white border-t border-neutral-200/80 pb-[env(safe-area-inset-bottom)] z-20">
+      <div class="flex items-center justify-around px-1 pt-2 pb-1">
+        <button data-nav="dashboard-profissional" onclick="mostrarTela('dashboard-profissional')" class="nav-item ativo flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl min-w-[56px]" aria-label="Dashboard Profissional">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Dashboard</span>
+        </button>
+        <button data-nav="jornada-diaria" onclick="mostrarTela('jornada-diaria')" class="nav-item flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl min-w-[56px]" aria-label="Jornada Diária">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Jornada</span>
+        </button>
+        <button data-nav="pre-anamnese-com-ia" onclick="mostrarTela('pre-anamnese-com-ia')" class="nav-item flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl min-w-[56px]" aria-label="Pré-Anamnese com IA">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Anamnese IA</span>
+        </button>
+        <button data-nav="consulta-e-prontuario" onclick="mostrarTela('consulta-e-prontuario')" class="nav-item flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl min-w-[56px]" aria-label="Consulta e Prontuário">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Prontuário</span>
+        </button>
+        <button data-nav="bancos-e-motor" onclick="mostrarTela('bancos-e-motor')" class="nav-item flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl min-w-[56px]" aria-label="Bancos e Motor">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+          <span class="text-[10px] font-semibold leading-none">Bancos</span>
+        </button>
       </div>
-      <button onclick="painel_profissional_fechar()" class="mt-3 w-full py-2.5 text-xs font-semibold text-[#6F760A]">Fechar</button>
-    </div>
+    </nav>
   </div>
 
   <script>
-    function painel_profissional_aba(a){
-      ['agenda','pendencias','retornos'].forEach(function(k){
-        document.getElementById('pp-painel-'+k).classList.toggle('hidden',k!==a);
-        var t=document.getElementById('pp-tab-'+k);
-        t.className='pp-tab '+(k===a?'pp-tab-on':'pp-tab-off');
+    function mostrarTela(id) {
+      document.querySelectorAll('[data-tela]').forEach(function (s) {
+        s.classList.toggle('hidden', s.dataset.tela !== id);
       });
+      document.querySelectorAll('[data-nav]').forEach(function (b) {
+        b.classList.toggle('ativo', b.dataset.nav === id);
+      });
+      window.scrollTo({ top: 0 });
     }
-    function painel_profissional_abrir(nome){
-      document.getElementById('pp-modal-nome').textContent=nome;
-      document.getElementById('pp-modal-ini').textContent=nome.split(' ')[0][0]+nome.split(' ')[1][0];
-      document.getElementById('pp-modal').classList.remove('hidden');
-    }
-    function painel_profissional_fechar(){document.getElementById('pp-modal').classList.add('hidden');}
-    function painel_profissional_lembrete(btn){
-      btn.textContent='Enviado ✓';
-      btn.className='mt-2 text-[11px] font-semibold text-[#4F5504] bg-[#DDF0C9] px-3 py-1.5 rounded-lg';
-      var t=document.getElementById('pp-toast');
-      t.textContent='Mensagem enviada por WhatsApp às 09:42';
-      t.classList.remove('hidden');
-      setTimeout(function(){t.classList.add('hidden');},2600);
-    }
+    document.addEventListener('DOMContentLoaded', function () {
+      mostrarTela('dashboard-profissional');
+    });
   </script>
-</section>
-
-    <!-- TELAS -->
-  </main>
-
-  <nav class="fixed bottom-0 left-0 right-0 z-40">
-    <div class="mx-auto max-w-[430px] bg-white/95 backdrop-blur border-t border-avera-200 px-1.5 pt-1.5 pb-2">
-      <div class="scroll-x flex items-stretch gap-1">
-
-        <button data-nav="jornada-da-cliente" onclick="mostrarTela('jornada-da-cliente')"
-          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-7-4.4-7-9.5a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.1-7 9.5-7 9.5z"/></svg>
-          <span class="text-[9.5px] leading-none tracking-tight">Jornada</span>
-        </button>
-
-        <button data-nav="check-in-diario" onclick="mostrarTela('check-in-diario')"
-          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11.5l2.2 2.2L15.5 9"/><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M8 2.5v3M16 2.5v3"/></svg>
-          <span class="text-[9.5px] leading-none tracking-tight">Check-in</span>
-        </button>
-
-        <button data-nav="pre-anamnese" onclick="mostrarTela('pre-anamnese')"
-          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3.5v4.5h4.5"/><path d="M18.5 8.5V19a2 2 0 0 1-2 2h-9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2H14z"/><path d="M9 13h6M9 16.5h4"/></svg>
-          <span class="text-[9.5px] leading-none tracking-tight">Anamnese</span>
-        </button>
-
-        <button data-nav="painel-profissional" onclick="mostrarTela('painel-profissional')"
-          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="2"/><rect x="13.5" y="3.5" width="7" height="7" rx="2"/><rect x="3.5" y="13.5" width="7" height="7" rx="2"/><rect x="13.5" y="13.5" width="7" height="7" rx="2"/></svg>
-          <span class="text-[9.5px] leading-none tracking-tight">Painel</span>
-        </button>
-
-        <button data-nav="ficha-da-cliente" onclick="mostrarTela('ficha-da-cliente')"
-          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/></svg>
-          <span class="text-[9.5px] leading-none tracking-tight">Ficha</span>
-        </button>
-
-        <button data-nav="chat-e-suporte" onclick="mostrarTela('chat-e-suporte')"
-          class="nav-btn relative flex-1 min-w-[62px] rounded-2xl py-2 flex flex-col items-center gap-1">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 12.5c0 4-3.8 7-8.5 7-1 0-2-.14-2.9-.4L4 21l1.4-3.6A6.6 6.6 0 0 1 3.5 12.5c0-4 3.8-7 8.5-7s8.5 3 8.5 7z"/></svg>
-          <span class="text-[9.5px] leading-none tracking-tight">Suporte</span>
-        </button>
-
-      </div>
-    </div>
-  </nav>
-
-</div>
-
-<script>
-  function mostrarTela(id) {
-    document.querySelectorAll('[data-tela]').forEach(function (s) {
-      s.classList.toggle('hidden', s.dataset.tela !== id);
-    });
-    document.querySelectorAll('[data-nav]').forEach(function (b) {
-      b.classList.toggle('ativo', b.dataset.nav === id);
-    });
-    window.scrollTo({ top: 0 });
-  }
-  document.addEventListener('DOMContentLoaded', function () {
-    mostrarTela('jornada-da-cliente');
-  });
-</script>
-
 </body>
 </html>
