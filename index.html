@@ -613,6 +613,432 @@
   </style>
 </section>
 
+    <section data-tela="pre-anamnese-com-ia" class="hidden">
+  <style>
+    .prv-step{transition:max-height .3s ease,opacity .3s ease;overflow:hidden}
+    .prv-step.collapsed{max-height:0;opacity:0;pointer-events:none}
+    .prv-step.expanded{max-height:600px;opacity:1}
+    .prv-toggle{transition:transform .2s ease}
+    .prv-toggle.open{transform:rotate(180deg)}
+    .prv-chip{transition:all .15s ease}
+    .prv-chip.selected{background:#4F5504;color:#fff;border-color:#4F5504}
+    .prv-input{transition:border-color .2s ease,box-shadow .2s ease}
+    .prv-input:focus{border-color:#6F760A;box-shadow:0 0 0 3px rgba(79,85,4,.15)}
+    .prv-bar{transition:width .4s ease}
+    @keyframes prvFadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+    .prv-animate{animation:prvFadeIn .4s ease forwards}
+    .prv-pulse{animation:prvPulse 1.5s ease infinite}
+    @keyframes prvPulse{0%,100%{opacity:1}50%{opacity:.5}}
+  </style>
+
+  <div class="mx-auto max-w-[430px] px-4 pb-24 pt-2">
+
+    <!-- Header com progresso -->
+    <div class="mb-4">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-lg font-semibold" style="color:#4F5504">Pré-Anamnese</h2>
+        <span class="text-xs font-medium px-2 py-0.5 rounded-full" style="background:#C4BC00;color:#4F5504">IA Ativa</span>
+      </div>
+      <p class="text-xs mb-3" style="color:#6F760A">Preencha com atenção — a IA organizará suas respostas para a profissional.</p>
+      <div class="w-full h-2 rounded-full" style="background:#E8E6D4">
+        <div id="prv-progress" class="prv-bar h-2 rounded-full" style="background:#4F5504;width:0%"></div>
+      </div>
+      <p id="prv-progress-text" class="text-[10px] mt-1 text-right" style="color:#8D8602">0 de 11 seções</p>
+    </div>
+
+    <!-- Formulário -->
+    <div id="prv-form-container">
+
+      <!-- Seção 1: Motivo da consulta -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(0)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">1</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Motivo da Consulta</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <textarea id="prv-motivo" rows="3" placeholder="Descreva o principal motivo da sua consulta..." class="prv-input w-full rounded-lg border p-2.5 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+        </div>
+      </div>
+
+      <!-- Seção 2: Sintomas -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(1)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">2</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Principais Sintomas</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <div id="prv-sintomas-chips" class="flex flex-wrap gap-2 mb-2"></div>
+          <input type="text" id="prv-sintoma-outro" placeholder="Outro sintoma..." class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504" onkeydown="if(event.key==='Enter')pre_anamnese_com_ia_add_chip('sintomas',this.value);this.value=''">
+        </div>
+      </div>
+
+      <!-- Seção 3: Sono -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(2)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">3</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Sono 🌙</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Horas por noite</label><input type="number" id="prv-sono-horas" min="0" max="24" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"></div>
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Qualidade</label><select id="prv-sono-qualidade" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"><option value="">Selecione</option><option>Ótima</option><option>Boa</option><option>Regular</option><option>Ruim</option><option>Muito ruim</option></select></div>
+          </div>
+          <textarea id="prv-sono-obs" rows="2" placeholder="Dificuldades para dormir, insônia, despertares..." class="prv-input w-full rounded-lg border p-2 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+        </div>
+      </div>
+
+      <!-- Seção 4: Alimentação -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(3)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">4</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Alimentação 🥗</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <div id="prv-alim-chips" class="flex flex-wrap gap-2 mb-2"></div>
+          <textarea id="prv-alim-obs" rows="2" placeholder="Descreva sua alimentação habitual..." class="prv-input w-full rounded-lg border p-2 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+        </div>
+      </div>
+
+      <!-- Seção 5: Emoções e Estresse -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(4)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">5</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Emoções e Estresse 😌</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Nível de estresse habitual</label>
+          <div class="flex gap-1 mb-3">
+            <button onclick="pre_anamnese_com_ia_set_stress(1)" class="prv-stress-btn flex-1 py-1.5 rounded-lg text-xs font-medium border" style="border-color:#C4BC00;color:#A67B01">1</button>
+            <button onclick="pre_anamnese_com_ia_set_stress(2)" class="prv-stress-btn flex-1 py-1.5 rounded-lg text-xs font-medium border" style="border-color:#C4BC00;color:#A67B01">2</button>
+            <button onclick="pre_anamnese_com_ia_set_stress(3)" class="prv-stress-btn flex-1 py-1.5 rounded-lg text-xs font-medium border" style="border-color:#C4BC00;color:#A67B01">3</button>
+            <button onclick="pre_anamnese_com_ia_set_stress(4)" class="prv-stress-btn flex-1 py-1.5 rounded-lg text-xs font-medium border" style="border-color:#C4BC00;color:#A67B01">4</button>
+            <button onclick="pre_anamnese_com_ia_set_stress(5)" class="prv-stress-btn flex-1 py-1.5 rounded-lg text-xs font-medium border" style="border-color:#C4BC00;color:#A67B01">5</button>
+          </div>
+          <textarea id="prv-emocoes-obs" rows="2" placeholder="Como você tem se sentido ultimamente? Ansiedade, tristeza, irritabilidade..." class="prv-input w-full rounded-lg border p-2 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+        </div>
+      </div>
+
+      <!-- Seção 6: Medicamentos e Suplementos -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(5)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">6</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Medicamentos 💊</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <textarea id="prv-medicamentos" rows="2" placeholder="Liste medicamentos de uso contínuo ou recente, com dosagem..." class="prv-input w-full rounded-lg border p-2 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+          <div class="mt-2">
+            <label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Suplementos</label>
+            <textarea id="prv-suplementos" rows="2" placeholder="Vitaminas, minerais, fitoterápicos..." class="prv-input w-full rounded-lg border p-2 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção 7: Hábitos e Rotina -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(6)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">7</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Hábitos e Rotina 🔄</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <div class="grid grid-cols-2 gap-2 mb-2">
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Atividade física</label><select id="prv-atividade" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"><option value="">Selecione</option><option>Sedentário</option><option>Leve (1-2x/sem)</option><option>Moderada (3-4x/sem)</option><option>Intensa (5+x/sem)</option></select></div>
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Fuma?</label><select id="prv-fuma" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"><option value="">Selecione</option><option>Não</option><option>Sim, eventual</option><option>Sim, diariamente</option></select></div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Consumo de álcool</label><select id="prv-alcool" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"><option value="">Selecione</option><option>Não</option><option>Socialmente</option><option>Regularmente</option></select></div>
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Ingestão de água</label><select id="prv-agua" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"><option value="">Selecione</option><option>&lt; 1L/dia</option><option>1-2L/dia</option><option>2-3L/dia</option><option>&gt; 3L/dia</option></select></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção 8: Histórico de saúde -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(7)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">8</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Histórico de Saúde 📋</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <div class="flex flex-wrap gap-2 mb-2" id="prv-doencas-chips"></div>
+          <textarea id="prv-historico-obs" rows="2" placeholder="Descreva cirurgias, hospitalizações, condições crônicas..." class="prv-input w-full rounded-lg border p-2 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+        </div>
+      </div>
+
+      <!-- Seção 9: Intestino e Energia -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(8)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">9</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Intestino e Energia ⚡</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <div class="grid grid-cols-2 gap-2">
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Frequência intestinal</label><select id="prv-intestino" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"><option value="">Selecione</option><option>3+ por dia</option><option>1-2 por dia</option><option>A cada 2 dias</option><option>Mais de 3 dias</option></select></div>
+            <div><label class="text-[10px] font-medium block mb-1" style="color:#6F760A">Nível de energia</label><select id="prv-energia" class="prv-input w-full rounded-lg border p-2 text-sm outline-none" style="border-color:#E8E6D4;color:#4F5504"><option value="">Selecione</option><option>Muito baixa</option><option>Baixa</option><option>Moderada</option><option>Alta</option><option>Muito alta</option></select></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção 10: Objetivos -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(9)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">10</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Objetivos 🎯</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3">
+          <textarea id="prv-objetivos" rows="3" placeholder="Quais são seus principais objetivos com esse acompanhamento?" class="prv-input w-full rounded-lg border p-2 text-sm resize-none outline-none" style="border-color:#E8E6D4;color:#4F5504"></textarea>
+        </div>
+      </div>
+
+      <!-- Seção 11: Consentimento -->
+      <div class="prv-step expanded mb-3 rounded-xl border" style="background:#fff;border-color:#E8E6D4">
+        <button onclick="pre_anamnese_com_ia_toggle(10)" class="w-full flex items-center justify-between p-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white" style="background:#4F5504">11</span>
+            <span class="text-sm font-medium" style="color:#4F5504">Consentimento e Documentos</span>
+          </div>
+          <svg class="prv-toggle open w-4 h-4" style="color:#8D8602" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div class="px-3 pb-3 space-y-2">
+          <label class="flex items-start gap-2 cursor-pointer">
+            <input type="checkbox" id="prv-consent-ia" class="mt-0.5 accent-[#4F5504]" onchange="pre_anamnese_com_ia_update_consent()">
+            <span class="text-xs" style="color:#4F5504">Autorizo o uso de IA para organizar minhas respostas e gerar resumo pré-consulta.</span>
+          </label>
+          <label class="flex items-start gap-2 cursor-pointer">
+            <input type="checkbox" id="prv-consent-geral" class="mt-0.5 accent-[#4F5504]" onchange="pre_anamnese_com_ia_update_consent()">
+            <span class="text-xs" style="color:#4F5504">Li e aceito o tratamento de dados pessoais conforme a LGPD.</span>
+          </label>
+          <button onclick="pre_anamnese_com_ia_upload_doc()" class="flex items-center gap-2 w-full py-2 px-3 rounded-lg border border-dashed text-xs font-medium" style="border-color:#8D8602;color:#6F760A">
+            <span>📎</span> Anexar documento ou exame
+          </button>
+          <div id="prv-uploaded-list" class="space-y-1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão de enviar -->
+    <div class="mt-4">
+      <button onclick="pre_anamnese_com_ia_submit()" id="prv-submit-btn" class="w-full py-3.5 rounded-xl text-sm font-semibold text-white flex items-center justify-center gap-2" style="background:#4F5504">
+        <span>✨</span> Enviar para Análise da IA
+      </button>
+    </div>
+
+    <!-- Resumo gerado pela IA (inicialmente oculto) -->
+    <div id="prv-ia-result" class="hidden mt-6">
+      <div class="rounded-xl border p-4" style="background:#F5F4E8;border-color:#C4BC00">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-base">✨</span>
+          <h3 class="text-sm font-semibold" style="color:#4F5504">Resumo Pré-Consulta — IA</h3>
+        </div>
+        <div id="prv-ia-content" class="space-y-2"></div>
+        <div class="mt-3 pt-3 border-t" style="border-color:#E8E6D4">
+          <button onclick="mostrarTela('consulta-e-prontuario')" class="w-full py-3 rounded-xl text-sm font-semibold text-white" style="background:#4F5504">
+            Ir para a Consulta →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const steps = document.querySelectorAll('#prv-form-container .prv-step');
+      const sintomasChips = ['Dor de cabeça', 'Fadiga', 'Insônia', 'Ansiedade', 'Inchaço', 'Queda de cabelo', 'Mudança de peso', 'Dores articulares'];
+      const doencasChips = ['Diabetes', 'Hipertensão', 'Hipotireoidismo', 'Alergia alimentar', 'Asma', 'Nenhuma'];
+
+      let selectedSintomas = [];
+      let selectedDoencas = [];
+      let stressLevel = 0;
+
+      window.pre_anamnese_com_ia_toggle = function(idx) {
+        const step = steps[idx];
+        const toggle = step.querySelector('.prv-toggle');
+        if (step.classList.contains('collapsed')) {
+          step.classList.remove('collapsed');
+          step.classList.add('expanded');
+          if (toggle) toggle.classList.add('open');
+        } else {
+          step.classList.remove('expanded');
+          step.classList.add('collapsed');
+          if (toggle) toggle.classList.remove('open');
+        }
+      };
+
+      window.pre_anamnese_com_ia_add_chip = function(group, value) {
+        if (!value || !value.trim()) return;
+        if (group === 'sintomas' && !selectedSintomas.includes(value)) {
+          selectedSintomas.push(value);
+          renderSintomas();
+        }
+      };
+
+      function renderSintomas() {
+        const container = document.getElementById('prv-sintomas-chips');
+        if (!container) return;
+        container.innerHTML = sintomasChips.map(s => {
+          const sel = selectedSintomas.includes(s) ? 'selected' : '';
+          return '<button onclick="pre_anamnese_com_ia_toggle_chip(\'sintomas\',\'' + s + '\')" class="prv-chip text-xs px-3 py-1.5 rounded-full border ' + sel + '" style="border-color:#8D8602;color:#4F5504">' + s + '</button>';
+        }).join('');
+      }
+
+      window.pre_anamnese_com_ia_toggle_chip = function(group, val) {
+        if (group === 'sintomas') {
+          const i = selectedSintomas.indexOf(val);
+          if (i > -1) selectedSintomas.splice(i, 1); else selectedSintomas.push(val);
+          renderSintomas();
+        }
+        if (group === 'doencas') {
+          const i = selectedDoencas.indexOf(val);
+          if (i > -1) selectedDoencas.splice(i, 1); else selectedDoencas.push(val);
+          renderDoencas();
+        }
+      };
+
+      function renderDoencas() {
+        const container = document.getElementById('prv-doencas-chips');
+        if (!container) return;
+        container.innerHTML = doencasChips.map(d => {
+          const sel = selectedDoencas.includes(d) ? 'selected' : '';
+          return '<button onclick="pre_anamnese_com_ia_toggle_chip(\'doencas\',\'' + d + '\')" class="prv-chip text-xs px-3 py-1.5 rounded-full border ' + sel + '" style="border-color:#8D8602;color:#4F5504">' + d + '</button>';
+        }).join('');
+      }
+
+      window.pre_anamnese_com_ia_set_stress = function(level) {
+        stressLevel = level;
+        document.querySelectorAll('.prv-stress-btn').forEach(function(btn, idx) {
+          if (idx < level) {
+            btn.style.background = '#4F5504';
+            btn.style.color = '#fff';
+            btn.style.borderColor = '#4F5504';
+          } else {
+            btn.style.background = 'transparent';
+            btn.style.color = '#A67B01';
+            btn.style.borderColor = '#C4BC00';
+          }
+        });
+      };
+
+      window.pre_anamnese_com_ia_update_consent = function() {
+        const c1 = document.getElementById('prv-consent-ia');
+        const c2 = document.getElementById('prv-consent-geral');
+        const btn = document.getElementById('prv-submit-btn');
+        if (c1 && c2 && btn) {
+          if (c1.checked && c2.checked) {
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
+          } else {
+            btn.style.opacity = '0.5';
+            btn.style.pointerEvents = 'none';
+          }
+        }
+      };
+
+      window.pre_anamnese_com_ia_upload_doc = function() {
+        const list = document.getElementById('prv-uploaded-list');
+        if (!list) return;
+        const nomes = ['Hemograma_completo_2025.pdf', 'Exame_urina_jan2025.pdf'];
+        const nome = nomes[Math.floor(Math.random() * nomes.length)];
+        const item = document.createElement('div');
+        item.className = 'prv-animate flex items-center justify-between p-2 rounded-lg';
+        item.style.cssText = 'background:#fff;border:1px solid #E8E6D4';
+        item.innerHTML = '<span class="text-xs flex items-center gap-1" style="color:#4F5504">📄 ' + nome + '</span><button onclick="this.parentElement.remove()" class="text-xs" style="color:#8D8602">✕</button>';
+        list.appendChild(item);
+      };
+
+      window.pre_anamnese_com_ia_submit = function() {
+        const btn = document.getElementById('prv-submit-btn');
+        const result = document.getElementById('prv-ia-result');
+        const content = document.getElementById('prv-ia-content');
+        const formContainer = document.getElementById('prv-form-container');
+
+        if (!btn || !result || !content || !formContainer) return;
+
+        btn.innerHTML = '<span class="prv-pulse">⏳</span> Analisando com IA...';
+        btn.style.background = '#8D8602';
+        btn.style.pointerEvents = 'none';
+
+        setTimeout(function() {
+          formContainer.style.display = 'none';
+          result.classList.remove('hidden');
+          result.classList.add('prv-animate');
+
+          const motivo = document.getElementById('prv-motivo');
+          const sonoHoras = document.getElementById('prv-sono-horas');
+          const sonoQual = document.getElementById('prv-sono-qualidade');
+          const energia = document.getElementById('prv-energia');
+          const intestino = document.getElementById('prv-intestino');
+          const atividade = document.getElementById('prv-atividade');
+          const estresseNivel = ['Muito baixo', 'Baixo', 'Moderado', 'Alto', 'Muito alto'][stressLevel - 1] || 'Não informado';
+          const emocoes = document.getElementById('prv-emocoes-obs');
+          const medicamentos = document.getElementById('prv-medicamentos');
+          const suplementos = document.getElementById('prv-suplementos');
+          const alimObs = document.getElementById('prv-alim-obs');
+          const objetivos = document.getElementById('prv-objetivos');
+
+          const sintomasStr = selectedSintomas.length > 0 ? selectedSintomas.join(', ') : 'Não informado';
+          const doencasStr = selectedDoencas.length > 0 ? selectedDoencas.join(', ') : 'Nenhuma relatada';
+
+          content.innerHTML = [
+            { label: 'Queixa principal', value: motivo && motivo.value ? motivo.value : 'Não informado' },
+            { label: 'Sintomas relatados', value: sintomasStr },
+            { label: 'Sono', value: (sonoHoras && sonoHoras.value ? sonoHoras.value + 'h/noite' : 'Não informado') + (sonoQual && sonoQual.value ? ' • Qualidade: ' + sonoQual.value : '') },
+            { label: 'Alimentação', value: alimObs && alimObs.value ? alimObs.value.substring(0, 120) : 'Não informado' },
+            { label: 'Emoções', value: emocoes && emocoes.value ? emocoes.value.substring(0, 120) : 'Não informado' },
+            { label: 'Estresse', value: estresseNivel },
+            { label: 'Medicamentos', value: medicamentos && medicamentos.value ? medicamentos.value.substring(0, 120) : 'Nenhum relatado' },
+            { label: 'Suplementos', value: suplementos && suplementos.value ? suplementos.value.substring(0, 100) : 'Nenhum relatado' },
+            { label: 'Histórico', value: doencasStr },
+            { label: 'Energia', value: energia && energia.value ? energia.value : 'Não informado' },
+            { label: 'Intestino', value: intestino && intestino.value ? intestino.value : 'Não informado' },
+            { label: 'Atividade física', value: atividade && atividade.value ? atividade.value : 'Não informado' },
+            { label: 'Objetivos', value: objetivos && objetivos.value ? objetivos.value.substring(0, 150) : 'Não informado' },
+          ].map(function(item) {
+            return '<div class="flex gap-2"><span class="text-[10px] font-semibold uppercase tracking-wide min-w-[90px]" style="color:#6F760A">' + item.label + '</span><span class="text-xs" style="color:#4F5504">' + item.value + '</span></div>';
+          }).join('');
+
+          window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }, 2200);
+      };
+
+      function init() {
+        renderSintomas();
+        renderDoencas();
+        if (document.getElementById('prv-consent-ia')) pre_anamnese_com_ia_update_consent();
+      }
+
+      init();
+    })();
+  </script>
+</section>
+
     <!-- TELAS -->
     </main>
 
